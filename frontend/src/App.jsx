@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      {location.pathname !== '/login' && <Header favourites={favourites} />}
+      <Header favourites={favourites} />
       <Routes>
         <Route path="/" element={<Home favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} />} />
         <Route
@@ -58,8 +58,7 @@ function App() {
               favourites={favourites}
               addToFavourites={addToFavourites}
               removeFromFavourites={removeFromFavourites}
-            />
-          }
+            />}
         />
         <Route path="/contact" element={<Contact favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} />} />
         <Route path="/about" element={<About />} />
@@ -68,9 +67,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path="*" element={<NotFound />} />
-
       </Routes>
-      {location.pathname !== '/login' && <Footer />}
+      <Footer />
     </div>
   );
 }

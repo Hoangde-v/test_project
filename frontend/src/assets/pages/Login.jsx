@@ -42,7 +42,7 @@ function Login() {
     <div className="login-container">
       {/* Left Panel */}
       <div className="login-form-section">
-        <div className="login-brand">🔒 FoodielandLogin</div>
+        <div className="login-brand">🔒 FoodieLogin</div>
         <h1 className="login-title">Holla,<br />Welcome to Foodieland</h1>
         <p className="login-subtext">Hey, welcome back to your special place</p>
         <form className="login-form" onSubmit={handleSubmit}>
