@@ -54,7 +54,8 @@
         "time": "10 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Jane Doe",
-        "authorDate": "10 April 2023"
+        "authorDate": "10 April 2023",
+        "price": 13.17
     },
     {
         "title": "Pan-Seared Chicken and Rice",
@@ -110,7 +111,8 @@
         "time": "25 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "John Smith",
-        "authorDate": "22 May 2023"
+        "authorDate": "22 May 2023",
+        "price": 13.61
     },
     {
         "title": "Salmon Salad",
@@ -167,7 +169,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Alice Johnson",
-        "authorDate": "01 June 2023"
+        "authorDate": "01 June 2023",
+        "price": 19.72
     },
     {
         "title": "Oatmeal Cookies",
@@ -224,7 +227,8 @@
         "time": "30 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Bob Williams",
-        "authorDate": "15 March 2023"
+        "authorDate": "15 March 2023",
+        "price": 16.91
     },
     {
         "title": "Mango Banana Smoothie",
@@ -274,7 +278,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Charlie Brown",
-        "authorDate": "05 April 2023"
+        "authorDate": "05 April 2023",
+        "price": 10.05
     },
     {
         "title": "Greek Yogurt Parfait",
@@ -324,7 +329,8 @@
         "time": "8 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Diana Prince",
-        "authorDate": "18 February 2023"
+        "authorDate": "18 February 2023",
+        "price": 19.54
     },
     {
         "title": "Grilled Turkey Sandwich",
@@ -380,7 +386,8 @@
         "time": "15 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Eve Adams",
-        "authorDate": "29 January 2023"
+        "authorDate": "29 January 2023",
+        "price": 12.08
     },
     {
         "title": "Beef Stir Fry",
@@ -437,7 +444,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Frank White",
-        "authorDate": "03 March 2023"
+        "authorDate": "03 March 2023",
+        "price": 15.77
     },
     {
         "title": "Almond Energy Balls",
@@ -487,7 +495,8 @@
         "time": "10 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Grace Taylor",
-        "authorDate": "11 May 2023"
+        "authorDate": "11 May 2023",
+        "price": 17.45
     },
     {
         "title": "Blueberry Protein Shake",
@@ -536,7 +545,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Harry Green",
-        "authorDate": "25 April 2023"
+        "authorDate": "25 April 2023",
+        "price": 19.63
     },
     {
         "title": "Egg White Omelette",
@@ -585,7 +595,8 @@
         "time": "12 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Ivy King",
-        "authorDate": "08 March 2023"
+        "authorDate": "08 March 2023",
+        "price": 19.45
     },
     {
         "title": "Quinoa and Veggie Bowl",
@@ -642,7 +653,8 @@
         "time": "30 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Jack Lee",
-        "authorDate": "19 February 2023"
+        "authorDate": "19 February 2023",
+        "price": 14.31
     },
     {
         "title": "Grilled Salmon with Asparagus",
@@ -699,7 +711,8 @@
         "time": "25 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Karen Hall",
-        "authorDate": "07 January 2023"
+        "authorDate": "07 January 2023",
+        "price": 16.58
     },
     {
         "title": "Trail Mix",
@@ -749,7 +762,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Liam Scott",
-        "authorDate": "02 March 2023"
+        "authorDate": "02 March 2023",
+        "price": 9.94
     },
     {
         "title": "Peanut Butter Banana Smoothie",
@@ -799,7 +813,8 @@
         "time": "7 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Mia Adams",
-        "authorDate": "14 April 2023"
+        "authorDate": "14 April 2023",
+        "price": 5.21
     },
     {
         "title": "Chia Seed Pudding",
@@ -849,7 +864,8 @@
         "time": "10 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Noah Wilson",
-        "authorDate": "28 February 2023"
+        "authorDate": "28 February 2023",
+        "price": 9.16
     },
     {
         "title": "Chicken Caesar Wrap",
@@ -905,7 +921,8 @@
         "time": "15 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Olivia Clark",
-        "authorDate": "09 March 2023"
+        "authorDate": "09 March 2023",
+        "price": 7.44
     },
     {
         "title": "Stuffed Bell Peppers",
@@ -962,7 +979,8 @@
         "time": "45 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Peter Evans",
-        "authorDate": "21 January 2023"
+        "authorDate": "21 January 2023",
+        "price": 14.45
     },
     {
         "title": "Fruit & Nut Bars",
@@ -1012,7 +1030,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Quinn Roberts",
-        "authorDate": "06 February 2023"
+        "authorDate": "06 February 2023",
+        "price": 18.84
     },
     {
         "title": "Strawberry Kale Smoothie",
@@ -1062,7 +1081,8 @@
         "time": "7 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Rachel Green",
-        "authorDate": "17 March 2023"
+        "authorDate": "17 March 2023",
+        "price": 10.37
     },
     {
         "title": "Tofu Scramble",
@@ -1119,7 +1139,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Sam White",
-        "authorDate": "04 May 2023"
+        "authorDate": "04 May 2023",
+        "price": 17.58
     },
     {
         "title": "Tuna Salad Wrap",
@@ -1176,7 +1197,8 @@
         "time": "10 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Tina Turner",
-        "authorDate": "12 April 2023"
+        "authorDate": "12 April 2023",
+        "price": 12.23
     },
     {
         "title": "Roasted Chicken and Veggies",
@@ -1233,7 +1255,8 @@
         "time": "50 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Uma Thurman",
-        "authorDate": "23 March 2023"
+        "authorDate": "23 March 2023",
+        "price": 19.0
     },
     {
         "title": "Protein Bar",
@@ -1283,7 +1306,8 @@
         "time": "15 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Victor Stone",
-        "authorDate": "09 February 2023"
+        "authorDate": "09 February 2023",
+        "price": 14.21
     },
     {
         "title": "Green Detox Smoothie",
@@ -1340,7 +1364,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Wendy Darling",
-        "authorDate": "16 January 2023"
+        "authorDate": "16 January 2023",
+        "price": 19.46
     },
     {
         "title": "Cottage Cheese Bowl",
@@ -1383,7 +1408,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Xavier Woods",
-        "authorDate": "27 May 2023"
+        "authorDate": "27 May 2023",
+        "price": 6.57
     },
     {
         "title": "Lentil Soup",
@@ -1440,7 +1466,8 @@
         "time": "40 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Yara Greyjoy",
-        "authorDate": "03 April 2023"
+        "authorDate": "03 April 2023",
+        "price": 12.12
     },
     {
         "title": "Zucchini Noodles with Pesto",
@@ -1490,7 +1517,8 @@
         "time": "15 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Zoe Davis",
-        "authorDate": "19 March 2023"
+        "authorDate": "19 March 2023",
+        "price": 18.04
     },
     {
         "title": "Carrot Sticks with Hummus",
@@ -1526,7 +1554,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Adam Smith",
-        "authorDate": "10 May 2023"
+        "authorDate": "10 May 2023",
+        "price": 17.97
     },
     {
         "title": "Pineapple Coconut Smoothie",
@@ -1576,7 +1605,8 @@
         "time": "6 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Brenda Lee",
-        "authorDate": "21 April 2023"
+        "authorDate": "21 April 2023",
+        "price": 15.39
     },
     {
         "title": "Banana Oat Pancakes",
@@ -1632,7 +1662,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Chris Evans",
-        "authorDate": "05 March 2023"
+        "authorDate": "05 March 2023",
+        "price": 18.71
     },
     {
         "title": "Turkey Lettuce Wraps",
@@ -1689,7 +1720,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Dana Scully",
-        "authorDate": "14 February 2023"
+        "authorDate": "14 February 2023",
+        "price": 14.68
     },
     {
         "title": "Grilled Shrimp Skewers",
@@ -1746,7 +1778,8 @@
         "time": "25 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Ethan Hunt",
-        "authorDate": "28 January 2023"
+        "authorDate": "28 January 2023",
+        "price": 19.65
     },
     {
         "title": "Rice Cake with Almond Butter",
@@ -1789,7 +1822,8 @@
         "time": "3 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Fiona Apple",
-        "authorDate": "01 March 2023"
+        "authorDate": "01 March 2023",
+        "price": 14.06
     },
     {
         "title": "Berry Beet Smoothie",
@@ -1839,7 +1873,8 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "George Costanza",
-        "authorDate": "11 February 2023"
+        "authorDate": "11 February 2023",
+        "price": 13.33
     },
     {
         "title": "Breakfast Burrito",
@@ -1895,7 +1930,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Hannah Baker",
-        "authorDate": "20 April 2023"
+        "authorDate": "20 April 2023",
+        "price": 10.28
     },
     {
         "title": "Pasta Primavera",
@@ -1952,7 +1988,8 @@
         "time": "25 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Ian Somerhalder",
-        "authorDate": "07 May 2023"
+        "authorDate": "07 May 2023",
+        "price": 18.98
     },
     {
         "title": "Baked Cod with Lemon",
@@ -2008,7 +2045,8 @@
         "time": "30 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Jessica Day",
-        "authorDate": "13 March 2023"
+        "authorDate": "13 March 2023",
+        "price": 16.07
     },
     {
         "title": "Roasted Chickpeas",
@@ -2066,7 +2104,8 @@
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Kevin Hart",
-        "authorDate": "04 February 2023"
+        "authorDate": "04 February 2023",
+        "price": 13.92
     },
     {
         "title": "Orange Carrot Smoothie",
@@ -2116,6 +2155,7 @@
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
         "authorName": "Laura Dern",
-        "authorDate": "26 May 2023"
+        "authorDate": "26 May 2023",
+        "price": 19.45
     }
 ]

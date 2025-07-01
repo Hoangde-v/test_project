@@ -44,6 +44,7 @@ class RecipeSeeder extends Seeder
                 'Protein' => $recipe['protein'],
                 'Carbs' => $recipe['carb'],
                 'Fat' => $recipe['fats'],
+                'price' => $recipe['price'],
                 'Prep_time' => $prepTime,
                 'DietType_ID' => $dietType->id,
                 'MealType_ID' => $mealType->id,

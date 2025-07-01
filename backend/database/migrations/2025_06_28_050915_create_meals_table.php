@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('Protein', 5, 2);
             $table->decimal('Carbs', 5, 2);
             $table->decimal('Fat', 5, 2);
+            $table->decimal('price', 6, 2);
             $table->integer('Prep_time');
             $table->foreignId('DietType_ID')->constrained('diet_types');
             $table->foreignId('MealType_ID')->constrained('meal_types' );
