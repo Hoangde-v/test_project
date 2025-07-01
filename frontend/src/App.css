@@ -40,3 +40,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.dashboard-slide {
+  transform: translateX(-100%);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dashboard-slide.open {
+  transform: translateX(0);
+}
