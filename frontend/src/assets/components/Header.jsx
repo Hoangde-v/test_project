@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Header() {
-
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+
+    const [dashboardOpen, setDashboardOpen] = useState(false);
+    const dashboardRef = useRef(null);
 
     const userName = localStorage.getItem("userName");
     const isLoggedIn = !!userName;
@@ -18,12 +20,20 @@ export default function Header() {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdownOpen(false);
             }
+            if (
+                dashboardOpen &&
+                dashboardRef.current &&
+                !dashboardRef.current.contains(event.target) &&
+                !event.target.classList.contains('dashboard-toggle-btn')
+            ) {
+                setDashboardOpen(false);
+            }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, [dashboardOpen]);
 
     return (
         <header
@@ -40,19 +50,28 @@ export default function Header() {
                 className="d-flex align-items-center justify-content-between container"
                 style={{ height: '100%' }}
             >
-                <Link
-                    to="/"
-                    className="fw-bold"
-                    style={{
-                        fontSize: '24px',
-                        color: '#2c3e50',
-                        textDecoration: 'none',
-                        fontFamily: 'Georgia, serif',
-                        letterSpacing: '1px'
-                    }}
-                >
-                    <span style={{ color: '#36b0c2' }}>Foodie</span>land
-                </Link>
+                <div className="d-flex align-items-center">
+                    <button
+                        className="dashboard-toggle-btn btn btn-link p-0 me-2"
+                        style={{ fontSize: '2rem', color: '#36b0c2' }}
+                        onClick={() => setDashboardOpen(true)}
+                    >
+                        <i className="bi bi-list"></i>
+                    </button>
+                    <Link
+                        to="/"
+                        className="fw-bold"
+                        style={{
+                            fontSize: '24px',
+                            color: '#2c3e50',
+                            textDecoration: 'none',
+                            fontFamily: 'Georgia, serif',
+                            letterSpacing: '1px'
+                        }}
+                    >
+                        <span style={{ color: '#36b0c2' }}>Foodie</span>land
+                    </Link>
+                </div>
 
                 <nav className="d-flex gap-4">
                     {[
@@ -167,6 +186,108 @@ export default function Header() {
                         </div>
                     )}
                 </div>
+
+                {dashboardOpen && (
+                    <>
+                        <div
+                            ref={dashboardRef}
+                            className={`dashboard-slide ${dashboardOpen ? 'open' : ''}`}
+                            style={{
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                height: '100vh',
+                                width: '420px', 
+                                background: '#fff',
+                                boxShadow: '2px 0 16px rgba(0,0,0,0.12)',
+                                zIndex: 2000,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                padding: '32px 24px 24px 24px'
+                            }}
+                        >
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <span className="fw-bold" style={{ fontSize: '1.5rem', color: '#36b0c2' }}>Dashboard</span>
+                                <button
+                                    className="btn btn-sm btn-outline-secondary"
+                                    onClick={() => setDashboardOpen(false)}
+                                    aria-label="Close dashboard"
+                                >
+                                    <i className="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                            <nav className="flex-grow-1">
+                                <ul className="list-unstyled mb-0" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                    {[
+                                        { to: '/', label: 'Home', icon: 'bi-house' },
+                                        { to: '/categories', label: 'Categories', icon: 'bi-grid' },
+                                        //{to: '/cart', label: 'Cart', icon: 'bi-cart'},
+                                        { to: '/favourite', label: 'Favourite', icon: 'bi-heart' },
+                                        { to: '/contact', label: 'Contact', icon: 'bi-envelope' },
+                                        { to: '/about', label: 'About us', icon: 'bi-info-circle' }
+                                    ].map((item, idx) => (
+                                        <li key={item.to}>
+                                            <Link
+                                                to={item.to}
+                                                onClick={() => setDashboardOpen(false)}
+                                                className="btn btn-outline-secondary2 rounded-2 px-4 py-3 flex-grow-1 w-100 text-start d-flex align-items-center"
+                                                style={{height: '48px', fontWeight: 500, fontSize: '1.1rem' }}
+                                            >
+                                                <i className={`bi ${item.icon}`} style={{ marginRight: 18, fontSize: '1.5rem' }}></i>
+                                                {item.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </nav>
+
+                            <Link
+                                to="/admin"
+                                className="btn btn-outline-dark rounded px-3 py-2 w-100 mt-3 d-flex align-items-center justify-content-center"
+                                style={{ borderRadius: '12px', fontWeight: 500 }}
+                                onClick={() => setDashboardOpen(false)}
+                            >
+                                <i className="bi bi-speedometer2" style={{ marginRight: 8 }}></i>
+                                Admin Dashboard
+                            </Link>
+                            {!isLoggedIn ? (
+                                <Link
+                                    to="/login"
+                                    className="btn btn-outline-primary rounded px-3 py-2 w-100 mt-3 d-flex align-items-center justify-content-center"
+                                    style={{ borderRadius: '12px', fontWeight: 500 }}
+                                    onClick={() => setDashboardOpen(false)}
+                                >
+                                    <i className="bi bi-box-arrow-in-right" style={{ marginRight: 8 }}></i>
+                                    Login
+                                </Link>
+                            ) : (
+                                <button
+                                    className="btn btn-outline-danger rounded px-3 py-2 w-100 mt-3 d-flex align-items-center justify-content-center"
+                                    style={{ borderRadius: '12px', fontWeight: 500 }}
+                                    onClick={() => {
+                                        localStorage.removeItem('userName');
+                                        setDashboardOpen(false);
+                                        window.location.reload();
+                                    }}
+                                >
+                                    <i className="bi bi-box-arrow-right" style={{ marginRight: 8 }}></i>
+                                    Logout
+                                </button>
+                            )}
+                        </div>
+                        <div
+                            style={{
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                width: '100vw',
+                                height: '100vh',
+                                background: 'rgba(0,0,0,0.2)',
+                                zIndex: 1500
+                            }}
+                        />
+                    </>
+                )}
             </div>
         </header>
     );
