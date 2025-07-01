@@ -269,6 +269,21 @@
     transform: translateY(-2px);
 }
 
+.btn-outline-secondary2 {
+    color: #000000;
+    border-color: #ffffff;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-outline-secondary2:hover {
+    color: #fff;
+    background-color: #36b0c2;
+    border-color: #36b0c2;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .feedback-form-section {
     background: linear-gradient(to bottom right, #f0fafd, #dff4f9);
     border-radius: 2rem;
