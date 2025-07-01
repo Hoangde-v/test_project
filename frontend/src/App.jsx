@@ -10,6 +10,7 @@ import Categories from './assets/pages/Categories.jsx';
 import FavouritePage from './assets/pages/Favourite.jsx';
 import Login from './assets/pages/Login.jsx';
 import Signup from './assets/pages/SignUp.jsx';
+import AdminDB from './assets/pages/AdminDB.jsx';
 import { useLocation } from 'react-router-dom';
 
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/favourite" element={<FavouritePage favourites={favourites} removeFromFavourites={removeFromFavourites} />} />
         <Route path="/login" element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path="/admin" element={<AdminDB />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
