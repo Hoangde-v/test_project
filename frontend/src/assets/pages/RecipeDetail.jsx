@@ -8,11 +8,12 @@ import forkKnife from '../images/RecipeDetail/ForkKnife.png';
 import RecipeNotFound from "../images/RecipeDetail/RecipeNotFound.svg";
 import CartIcon from '../images/Cart/Cart.svg';
 
-const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourites }) => {
+const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourites, addToOrders }) => {
   const { title: recipeTitle } = useParams();
   const navigate = useNavigate();
 
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [similarRecipes, setSimilarRecipes] = useState([]);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -61,6 +62,8 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
     fats: recipeToDisplay.fats
   };
 
+  const price = recipeToDisplay.price;
+
   const preparations = [
     { title: "Flavor Profile", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
     { title: "How It’s Made", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." },
@@ -85,7 +88,18 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
   const handleBuyNowClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(`Buy Now clicked for: ${recipeToDisplay.title}`);
+
+    if (addToOrders && recipeToDisplay.title !== "Recipe Not Found") {
+      const orderDetails = {
+        name: recipeToDisplay.title,
+        image: recipeToDisplay.image,
+        diet: recipeToDisplay.diet,
+        price: parseFloat(recipeToDisplay.price) || 0,
+        quantity: selectedQuantity,
+      };
+      addToOrders(orderDetails);
+      alert(`Added "${recipeToDisplay.title}" to your orders!`);
+    }
   };
 
   const handleAddToCartClick = (e) => {
@@ -135,7 +149,7 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
       <section className="container py-4">
         <div className="d-flex flex-column flex-lg-row gap-4">
           <div className="col-12 col-lg-8 rounded-4 overflow-hidden">
-            <img src={recipeToDisplay.image} alt={recipeToDisplay.title} className='object-fit-cover' style={{width: '780px', height: '530px'}}/>
+            <img src={recipeToDisplay.image} alt={recipeToDisplay.title} className='object-fit-cover' style={{ width: '780px', height: '530px' }} />
           </div>
 
           <div className="col-12 col-lg-4 d-flex flex-column gap-4">
@@ -159,38 +173,89 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
               </div>
             </div>
 
-            <div className="d-flex justify-content-between align-items-center pt-3 flex-shrink-0">
-                <button
-                    className="btn btn-outline-secondary rounded-pill px-3 py-2 flex-grow-1 me-2"
-                    onClick={handleBuyNowClick}
-                >
-                    Buy Now
-                </button>
-                <button
-                    className="btn rounded-circle"
-                    onClick={handleAddToCartClick}
-                    style={{
-                        width: '40px',
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transition: 'background-color 0.3s ease, filter 0.3s ease',
-                        backgroundColor: cartButtonBackgroundColor,
+            {price && (
+              <div className="d-flex justify-content-between align-items-center mb-2 gap-3">
+                <div className="d-flex align-items-center gap-2">
+                  <button
+                    className="btn btn-outline-secondary px-3 py-1"
+                    onClick={() => {
+                      const value = parseInt(selectedQuantity) || 1;
+                      setSelectedQuantity(Math.max(1, value - 1));
                     }}
-                    onMouseEnter={(e) => {
-                        if (!isCartClicked) {
-                            e.currentTarget.style.backgroundColor = '#e2e6ea';
+                  >
+                    −
+                  </button>
+
+                  <input
+                    type="number"
+                    className="form-control text-center"
+                    style={{ maxWidth: '80px', fontWeight: 'bold', borderRadius: '8px' }}
+                    value={selectedQuantity}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === '') {
+                        setSelectedQuantity('');
+                      } else {
+                        const num = parseInt(value);
+                        if (!isNaN(num) && num > 0) {
+                          setSelectedQuantity(num);
                         }
+                      }
                     }}
-                    onMouseLeave={(e) => {
-                        if (!isCartClicked) {
-                            e.currentTarget.style.backgroundColor = '#f8f9fa';
-                        }
+                  />
+
+                  <button
+                    className="btn btn-outline-secondary px-3 py-1"
+                    onClick={() => {
+                      const value = parseInt(selectedQuantity) || 1;
+                      setSelectedQuantity(value + 1);
                     }}
-                >
-                    <img src={CartIcon} alt="Cart Icon" style={{ width: '20px', height: '20px', filter: cartIconFilter }} />
-                </button>
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div>
+                  <span className="fw-semibold text-secondary me-1 fs-5">Total:</span>
+                  <span className="text-danger fw-bold fs-4">
+                    ${(parseFloat(price) * (parseInt(selectedQuantity || 0) || 0)).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className="d-flex justify-content-between align-items-center flex-shrink-0">
+              <button
+                className="btn btn-outline-secondary rounded-pill px-3 flex-grow-1 me-2"
+                onClick={handleBuyNowClick}
+              >
+                Buy Now
+              </button>
+              <button
+                className="btn rounded-circle"
+                onClick={handleAddToCartClick}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'background-color 0.3s ease, filter 0.3s ease',
+                  backgroundColor: cartButtonBackgroundColor,
+                }}
+                onMouseEnter={(e) => {
+                  if (!isCartClicked) {
+                    e.currentTarget.style.backgroundColor = '#e2e6ea';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isCartClicked) {
+                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                  }
+                }}
+              >
+                <img src={CartIcon} alt="Cart Icon" style={{ width: '20px', height: '20px', filter: cartIconFilter }} />
+              </button>
             </div>
           </div>
         </div>
@@ -321,9 +386,11 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
                   time={recipe.time}
                   diet={recipe.diet}
                   calories={recipe.calories}
+                  price={recipe.price}
                   favourites={favourites}
                   addToFavourites={addToFavourites}
                   removeFromFavourites={removeFromFavourites}
+                  addToOrders={addToOrders}
                 />
               </div>
             ))

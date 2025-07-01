@@ -4,7 +4,7 @@ import RecipeCard from '../components/RecipeCard.jsx';
 import recipesData from '../data/Recipes.json';
 import '../css/Categories.css';
 
-export default function Categories({ favourites, addToFavourites, removeFromFavourites }) {
+export default function Categories({ favourites, addToFavourites, removeFromFavourites, addToOrders }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [ingredientSearch, setIngredientSearch] = useState('');
     const [selectedDiet, setSelectedDiet] = useState('all');
@@ -14,9 +14,6 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
     const [selectedAllergy, setSelectedAllergy] = useState('all');
 
     const [filteredRecipes, setFilteredRecipes] = useState(recipesData);
-
-    const [calcIngredients, setCalcIngredients] = useState('');
-    const [calculatedNutrition, setCalculatedNutrition] = useState(null);
 
     const [showMoreFilters, setShowMoreFilters] = useState(false);
 
@@ -89,39 +86,6 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
     };
 
     const uniqueDiets = [...new Set(recipesData.flatMap(recipe => recipe.diet || []).filter(Boolean))];
-
-    const handleCalcIngredientsChange = (e) => {
-        setCalcIngredients(e.target.value);
-    };
-
-    const calculateNutrition = () => {
-        const inputIngredients = calcIngredients.toLowerCase().split(',').map(item => item.trim());
-        let totalCalories = 0;
-        let totalProtein = 0;
-        let totalCarb = 0;
-        let totalFats = 0;
-
-        recipesData.forEach(recipe => {
-            const recipeIngredients = recipe.ingredients.map(ing => ing.toLowerCase());
-            const hasCommonIngredient = inputIngredients.some(inputIng =>
-                recipeIngredients.some(recIng => recIng.includes(inputIng))
-            );
-
-            if (hasCommonIngredient) {
-                totalCalories += recipe.calories || 0;
-                totalProtein += 10;
-                totalCarb += 15;
-                totalFats += 5;
-            }
-        });
-
-        setCalculatedNutrition({
-            calories: totalCalories,
-            protein: totalProtein,
-            carb: totalCarb,
-            fats: totalFats,
-        });
-    };
 
     const toggleShowMoreFilters = () => {
         setShowMoreFilters(prev => !prev);
@@ -261,6 +225,7 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
                                                         favourites={favourites}
                                                         addToFavourites={addToFavourites}
                                                         removeFromFavourites={removeFromFavourites}
+                                                        addToOrders={addToOrders}
                                                     />
                                                 </div>
                                             ))}
@@ -277,37 +242,6 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
                     </section>
                 )}
             </div>
-
-            {/* <section className="container mb-5 p-4 bg-light rounded-3 shadow-sm">
-                <h3 className="mb-4">Nutrition Calculator</h3>
-                <div className="row g-4">
-                    <div className="col-md-8">
-                        <label htmlFor="calcIngredients" className="form-label">Enter Ingredients (comma-separated)</label>
-                        <textarea
-                            className="form-control rounded-3 px-4 py-2"
-                            id="calcIngredients"
-                            rows="3"
-                            placeholder="e.g. chicken breast 200g, rice 100g, broccoli 150g"
-                            value={calcIngredients}
-                            onChange={handleCalcIngredientsChange}
-                        ></textarea>
-                        <button className="btn btn-primary mt-3 rounded-pill px-4 py-2" onClick={calculateNutrition}>
-                            Calculate Nutrition
-                        </button>
-                    </div>
-                    <div className="col-md-4">
-                        {calculatedNutrition && (
-                            <div className="bg-white rounded-3 p-4 shadow-sm">
-                                <h5 className="mb-3">Estimated Nutrition Values:</h5>
-                                <p className="mb-1"><strong>Calories:</strong> {calculatedNutrition.calories} kcal</p>
-                                <p className="mb-1"><strong>Protein:</strong> {calculatedNutrition.protein} g</p>
-                                <p className="mb-1"><strong>Carbs:</strong> {calculatedNutrition.carb} g</p>
-                                <p className="mb-1"><strong>Fats:</strong> {calculatedNutrition.fats} g</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section> */}
         </div>
     );
 }

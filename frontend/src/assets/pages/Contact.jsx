@@ -4,7 +4,7 @@ import SaladBg from '../images/Contact/SaladBg.png';
 import recipesData from '../data/Recipes.json';
 import RecipeCard from '../components/RecipeCard.jsx';
 
-export default function ContactPage({ favourites, addToFavourites, removeFromFavourites }) {
+export default function ContactPage({ favourites, addToFavourites, removeFromFavourites, addToOrders }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [subject, setSubject] = useState('');
@@ -252,9 +252,11 @@ export default function ContactPage({ favourites, addToFavourites, removeFromFav
                                     time={recipe.time}
                                     diet={recipe.diet}
                                     calories={recipe.calories}
+                                    price={recipe.price}
                                     favourites={favourites}
                                     addToFavourites={addToFavourites}
                                     removeFromFavourites={removeFromFavourites}
+                                    addToOrders={addToOrders}
                                 />
                             </div>
                         ))

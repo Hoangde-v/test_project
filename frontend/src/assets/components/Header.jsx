@@ -1,7 +1,4 @@
 import React from 'react';
-import FacebookIcon from '../images/HeaderVsFooter/facebook.svg';
-import TwitterIcon from '../images/HeaderVsFooter/twitter.svg';
-import InstagramIcon from '../images/HeaderVsFooter/instagram.svg';
 import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
@@ -183,6 +180,22 @@ export default function Header() {
                             >
                                 Exit
                             </button>
+                            <Link
+                                to="/orders"
+                                onClick={() => setDropdownOpen(false)}
+                                style={{
+                                    padding: '8px 12px',
+                                    display: 'block',
+                                    color: '#2c3e50',
+                                    textDecoration: 'none',
+                                    backgroundColor: 'white',
+                                    transition: 'background-color 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                            >
+                                Orders
+                            </Link>
                         </div>
                     )}
                 </div>
@@ -197,7 +210,7 @@ export default function Header() {
                                 top: 0,
                                 left: 0,
                                 height: '100vh',
-                                width: '420px', 
+                                width: '420px',
                                 background: '#fff',
                                 boxShadow: '2px 0 16px rgba(0,0,0,0.12)',
                                 zIndex: 2000,
@@ -221,7 +234,6 @@ export default function Header() {
                                     {[
                                         { to: '/', label: 'Home', icon: 'bi-house' },
                                         { to: '/categories', label: 'Categories', icon: 'bi-grid' },
-                                        //{to: '/cart', label: 'Cart', icon: 'bi-cart'},
                                         { to: '/favourite', label: 'Favourite', icon: 'bi-heart' },
                                         { to: '/contact', label: 'Contact', icon: 'bi-envelope' },
                                         { to: '/about', label: 'About us', icon: 'bi-info-circle' }
@@ -231,7 +243,7 @@ export default function Header() {
                                                 to={item.to}
                                                 onClick={() => setDashboardOpen(false)}
                                                 className="btn btn-outline-secondary2 rounded-2 px-4 py-3 flex-grow-1 w-100 text-start d-flex align-items-center"
-                                                style={{height: '48px', fontWeight: 500, fontSize: '1.1rem' }}
+                                                style={{ height: '48px', fontWeight: 500, fontSize: '1.1rem' }}
                                             >
                                                 <i className={`bi ${item.icon}`} style={{ marginRight: 18, fontSize: '1.5rem' }}></i>
                                                 {item.label}
