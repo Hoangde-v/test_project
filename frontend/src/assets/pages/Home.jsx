@@ -18,7 +18,7 @@ import Ads from '../images/Home/Ads.png'
 import Cheff1 from '../images/Home/Cheff1.png'
 import Cheff2 from '../images/Home/Cheff2.png'
 
-export default function Home({ favourites, addToFavourites, removeFromFavourites, addToOrders }) {
+export default function Home({ favourites, addToFavourites, removeFromFavourites, addToOrders, cartItems, addToCart, removeFromCart }) {
     const [categories, setCategories] = useState([])
     const allCategories = ['breakfast', 'lunch', 'dinner', 'snacks', 'smoothies'];
 
@@ -190,7 +190,16 @@ export default function Home({ favourites, addToFavourites, removeFromFavourites
                                         />
                                     </div>
                                 ) : (
-                                    <RecipeCard {...recipe} favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addToOrders} />
+                                    <RecipeCard
+                                        {...recipe}
+                                        favourites={favourites}
+                                        addToFavourites={addToFavourites}
+                                        removeFromFavourites={removeFromFavourites}
+                                        addToOrders={addToOrders}
+                                        cartItems={cartItems}
+                                        addToCart={addToCart}
+                                        removeFromCart={removeFromCart}
+                                    />
                                 )}
                             </div>
                         ))}

@@ -196,6 +196,22 @@ export default function Header() {
                             >
                                 Orders
                             </Link>
+                            <Link
+                                to="/cart"
+                                onClick={() => setDropdownOpen(false)}
+                                style={{
+                                    padding: '8px 12px',
+                                    display: 'block',
+                                    color: '#2c3e50',
+                                    textDecoration: 'none',
+                                    backgroundColor: 'white',
+                                    transition: 'background-color 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                            >
+                                Cart
+                            </Link>
                         </div>
                     )}
                 </div>

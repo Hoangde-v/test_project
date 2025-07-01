@@ -12,10 +12,11 @@ import Login from './assets/pages/Login.jsx';
 import Signup from './assets/pages/SignUp.jsx';
 import AdminDB from './assets/pages/AdminDB.jsx';
 import Orders from './assets/pages/Orders.jsx';
+import Cart from './assets/pages/Cart.jsx';
 import recipesData from './assets/data/Recipes.json';
 
 function NotFound() {
-  return <h1 className="text-center font-bold my-5">404 - NotFound</h1>;
+  return <h1 className="text-center font-bold my-5">404 - Not Found</h1>;
 }
 
 function App() {
@@ -52,8 +53,10 @@ function App() {
   const addOrder = (newRecipe) => {
     setOrders(prev => {
       const today = new Date().toISOString().split('T')[0];
-      const newId = prev.length ? Math.max(...prev.map(o => o.id)) + 1 : 1;
-      const details = recipesData.find(r => r.title === newRecipe.name);
+
+      const newId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
+      const details = recipesData.find(r => r.title === newRecipe.name) || {};
 
       return [
         ...prev,
@@ -61,35 +64,96 @@ function App() {
           id: newId,
           name: newRecipe.name,
           status: 'Pending Confirmation',
-          image: newRecipe.image || details?.image || 'https://placehold.co/200x150',
-          diet: newRecipe.diet || details?.diet || [],
-          dietClass: newRecipe.dietClass || details?.dietClass || 'bg-secondary',
+          image: newRecipe.image || details.image || 'https://placehold.co/200x150',
+          diet: newRecipe.diet || details.diet || [],
+          dietClass: newRecipe.dietClass || details.dietClass || 'bg-secondary',
           quantity: newRecipe.quantity || 1,
+          price: newRecipe.price ?? details.price ?? 0,
           orderDate: today,
         }
       ];
     });
   };
 
-  const removeOrder = (orderIdToRemove) => {
-    setOrders(prev => prev.filter(order => order.id !== orderIdToRemove));
+  const removeOrder = (orderIdToRemove, itemName = null) => {
+    setOrders(prev => {
+      if (itemName) {
+        return prev.filter(order => !(order.id === orderIdToRemove && order.name === itemName));
+      } else {
+        return prev.filter(order => order.id !== orderIdToRemove);
+      }
+    });
+  };
+
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('nutriplanner-cartItems');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('nutriplanner-cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const addToCart = (recipe) => {
+    setCartItems(prev => {
+      const existingItem = prev.find(item => item.title === recipe.title);
+
+      if (existingItem) {
+        return prev.map(item =>
+          item.title === recipe.title
+            ? { ...item, quantity: item.quantity + (recipe.quantity || 1) }
+            : item
+        );
+      }
+
+      return [...prev, { ...recipe, quantity: recipe.quantity || 1 }];
+    });
+  };
+
+  const removeFromCart = (recipeToRemove) => {
+    setCartItems(prev => prev.filter(item => item.title !== recipeToRemove.title));
+  };
+
+  const handlePlaceOrderFromCart = (ordersToPlace) => {
+    if (!Array.isArray(ordersToPlace)) return;
+
+    const orderId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+    const orderDate = new Date().toISOString();
+
+    const newOrders = ordersToPlace.map(item => ({
+      id: orderId,
+      name: item.name,
+      image: item.image,
+      diet: item.diet,
+      price: item.price,
+      quantity: item.quantity,
+      status: 'Pending Confirmation',
+      orderDate,
+    }));
+
+    setOrders(prevOrders => [...prevOrders, ...newOrders]);
+
+    ordersToPlace.forEach(item => {
+      removeFromCart({ title: item.name });
+    });
   };
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header favourites={favourites} />
+      <Header favourites={favourites} cartItemCount={cartItems.length} />
       <main className="flex-grow-1">
         <Routes>
-          <Route path="/" element={<Home favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} />} />
-          <Route path="/recipe/:title" element={<RecipeDetailComponent favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} />} />
-          <Route path="/contact" element={<Contact favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} />} />
+          <Route path="/" element={<Home favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
+          <Route path="/recipe/:title" element={<RecipeDetailComponent favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
+          <Route path="/contact" element={<Contact favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
           <Route path="/about" element={<About />} />
-          <Route path="/categories" element={<Categories favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} />} />
+          <Route path="/categories" element={<Categories favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
           <Route path="/favourite" element={<FavouritePage favourites={favourites} removeFromFavourites={removeFromFavourites} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/admin" element={<AdminDB />} />
           <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} onPlaceOrder={handlePlaceOrderFromCart} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
