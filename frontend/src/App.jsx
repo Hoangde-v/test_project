@@ -13,6 +13,7 @@ import Signup from './assets/pages/SignUp.jsx';
 import AdminDB from './assets/pages/AdminDB.jsx';
 import Orders from './assets/pages/Orders.jsx';
 import recipesData from './assets/data/Recipes.json';
+import ProtectedRoute from './assets/components/ProtectedRoute.jsx';
 
 function NotFound() {
   return <h1 className="text-center font-bold my-5">404 - NotFound</h1>;
@@ -91,6 +92,11 @@ function App() {
           <Route path="/admin" element={<AdminDB />} />
           <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
           <Route path="*" element={<NotFound />} />
+          {/* <Route path="/admin-dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/user-dashboard" element={<ProtectedRoute allowedRoles={['user', 'admin']}><UserDashboard /></ProtectedRoute>} /> */}
+          {/* BBao giờ có admin với user dash borad thì sẵn mở */}
+
+
         </Routes>
       </main>
       <Footer />

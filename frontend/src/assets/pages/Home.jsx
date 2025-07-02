@@ -32,20 +32,21 @@ export default function Home({ favourites, addToFavourites, removeFromFavourites
 
     const heroSlidesData = RecipesData;
 
-    useEffect(() => {
-        const fetchData = () => {
-            fetch('http://127.0.0.1:8000/categories/list').then(res => {
-                return res.json()
-            }).then((res) => {
-                console.log(res);
-                setCategories(res.data.categories)
+    // useEffect(() => {
+    //     const fetchData = () => {
+    //         fetch('http://127.0.0.1:8000/categories/list').then(res => {
+    //             return res.json()
+    //         }).then((res) => {
+    //             console.log(res);
+    //             setCategories(res.data.categories)
 
-            }).catch((err) => {
-                console.log(`failed on get data from api ${err}`);
-            })
-        }
-        fetchData()
-    }, [])
+    //         }).catch((err) => {
+    //             console.log(`failed on get data from api ${err}`);
+    //         })
+    //     }
+    //     fetchData()
+    // }, [])
+    // chưa có API để lấy categories, nên tạm thời dùng mảng categories cứng
 
     Swiper.use([Pagination, Autoplay]);
 

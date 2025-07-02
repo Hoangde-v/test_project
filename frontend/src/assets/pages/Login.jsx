@@ -11,10 +11,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/api/login', {
+      const response = await fetch('http://localhost:8000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({ email, password }),
       });
@@ -25,10 +26,18 @@ function Login() {
         alert("Đăng nhập thành công!");
 
         if (data.token) {
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('token', data.token);         // lưu token
+          localStorage.setItem('role', data.user.role);      // lưu role
+          localStorage.setItem('userName', data.user.name);
         }
 
-        navigate('/');
+        // Phân luồng theo role
+        if (data.user.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
+
       } else {
         alert("Đăng nhập thất bại: " + (data.message || "Thông tin không chính xác"));
       }
@@ -36,6 +45,7 @@ function Login() {
       alert("Lỗi kết nối tới server.");
       console.error("Login error:", error);
     }
+
   };
 
   return (
@@ -71,14 +81,14 @@ function Login() {
           <button type="submit">Sign In</button>
         </form>
         <p className="signup-link">
-          Don't have an account? <a onClick={() => navigate('/signup')} style={{textDecoration: 'underline', cursor: 'pointer'}}>Sign Up</a>
-      </p>
-    </div>
+          Don't have an account? <a onClick={() => navigate('/signup')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Sign Up</a>
+        </p>
+      </div>
 
-      {/* Right Image Section */ }
-  <div className="login-image-section">
-    <img src={CheffImage} alt="Chef Illustration" className="login-image" />
-  </div>
+      {/* Right Image Section */}
+      <div className="login-image-section">
+        <img src={CheffImage} alt="Chef Illustration" className="login-image" />
+      </div>
     </div >
   );
 }

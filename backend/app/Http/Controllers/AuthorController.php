@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Author;
 
-class AuthController extends Controller
+class AuthorController extends Controller
 {
     public function login(Request $request)
     {
@@ -21,11 +21,10 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => [
-                'name' => $user->name,
                 'email' => $user->email,
+                'name' => $user->name,
                 'role' => $user->role
             ]
         ]);
     }
 }
-
