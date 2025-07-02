@@ -14,6 +14,7 @@ import AdminDB from './assets/pages/AdminDB.jsx';
 import Orders from './assets/pages/Orders.jsx';
 import Cart from './assets/pages/Cart.jsx';
 import recipesData from './assets/data/Recipes.json';
+import ProductManager from './assets/pages/ProductManager';
 
 function NotFound() {
   return <h1 className="text-center font-bold my-5">404 - Not Found</h1>;
@@ -154,6 +155,8 @@ function App() {
           <Route path="/admin" element={<AdminDB />} />
           <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} onPlaceOrder={handlePlaceOrderFromCart} />} />
+          <Route path="/product-manager" element={<ProductManager />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
