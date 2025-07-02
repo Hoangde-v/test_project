@@ -40,7 +40,7 @@ const getDietBadgeStyles = (dietItem) => {
     return { backgroundColor: bgColor, color: textColor };
 };
 
-const Orders = ({ currentOrders, removeOrder }) => {
+const Orders = ({ currentOrders, removeOrder, setTotalReturns }) => {
     const [activeTab, setActiveTab] = useState('Pending Confirmation');
 
     const groupedOrders = useMemo(() => {
@@ -67,11 +67,14 @@ const Orders = ({ currentOrders, removeOrder }) => {
         return Object.keys(groupedOrders).length > 0;
     }, [groupedOrders]);
 
-    const handleRemoveRecipe = useCallback((orderId, orderName) => {
+    const handleRemoveRecipe = useCallback((orderId, orderName, orderStatus) => {
         if (window.confirm('Are you sure you want to cancel this item from the order?')) {
             removeOrder(orderId, orderName);
+            if (orderStatus === 'Preparing Food' && typeof setTotalReturns === 'function') {
+                setTotalReturns(prev => prev + 1);
+            }
         }
-    }, [removeOrder]);
+    }, [removeOrder, setTotalReturns]);
 
     const handleRemoveWholeOrder = useCallback((orderId) => {
         if (window.confirm('Are you sure you want to cancel the entire order?')) {
@@ -132,7 +135,7 @@ const Orders = ({ currentOrders, removeOrder }) => {
                 <div className="d-flex flex-column flex-md-row gap-2 mt-3 mt-md-0">
                     <button
                         className="btn btn-danger rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-1"
-                        onClick={() => handleRemoveRecipe(order.id, order.name)}
+                        onClick={() => handleRemoveRecipe(order.id, order.name, order.status)}
                     >
                         <i className="bi bi-x-circle"></i> Remove Item
                     </button>
