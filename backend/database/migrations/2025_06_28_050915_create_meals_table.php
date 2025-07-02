@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
-            $table->text('Description');
-            $table->integer('Calories');
-            $table->decimal('Protein', 5, 2);
-            $table->decimal('Carbs', 5, 2);
-            $table->decimal('Fat', 5, 2);
+            $table->string('name');
+            $table->text('description');
+            $table->integer('calories');
+            $table->decimal('protein', 5, 2);
+            $table->decimal('carbs', 5, 2);
+            $table->decimal('fat', 5, 2);
             $table->decimal('price', 6, 2);
-            $table->integer('Prep_time');
-            $table->foreignId('DietType_ID')->constrained('diet_types');
-            $table->foreignId('MealType_ID')->constrained('meal_types' );
-            $table->foreignId('Allergen_ID')->constrained('allergens');
+            $table->integer('prep_time');
+            $table->foreignId('dietType_ID')->constrained('diet_types');
+            $table->foreignId('mealType_ID')->constrained('meal_types' );
+            $table->foreignId('allergen_ID')->constrained('allergens');
             $table->timestamps();
         });
     }

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('User_ID')->constrained('users', 'UserID')->onDelete('cascade');
-            $table->string('Title');
-            $table->text('Content');
-            $table->date('CreatedAt');
-            $table->enum('Status', ['draft', 'published']);
+            $table->string('title');
+            $table->text('content');
+            $table->date('createdAt');
+            $table->enum('status', ['draft', 'published']);
         });
     }
 

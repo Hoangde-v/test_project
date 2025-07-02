@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
-            $table->integer('CaloriesPer100g');
-            $table->decimal('ProteinPer100g', 5, 2);
-            $table->decimal('CarbsPer100g', 5, 2);
-            $table->decimal('FatPer100g', 5, 2);
+            $table->string('name');
+            $table->integer('caloriesPer100g');
+            $table->decimal('proteinPer100g', 5, 2);
+            $table->decimal('carbsPer100g', 5, 2);
+            $table->decimal('fatPer100g', 5, 2);
             $table->timestamps();
         });
     }

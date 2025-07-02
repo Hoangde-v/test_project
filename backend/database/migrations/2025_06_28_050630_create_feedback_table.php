@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
             $table->foreignId('User_ID')->constrained('users', 'UserID')->onDelete('cascade');
-            $table->integer('Rating');
-            $table->text('Message');
-            $table->date('CreatedAt');
+            $table->integer('rating');
+            $table->text('message');
+            $table->date('createdAt');
         });
     }
 

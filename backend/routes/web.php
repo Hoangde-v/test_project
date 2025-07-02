@@ -13,14 +13,18 @@ Route::get('/', function () {
 });
 
 
+// Route::middleware([AuthApiToken::class])->group(function () {
+//     Route::get('/me', function (Request $request) {
+//         return response()->json($request->user);
+//     });
+
+//     Route::get('/admin/only', function (Request $request) {
+//         if ($request->user->role !== 'admin') {
+//             return response()->json(['message' => 'Forbidden'], 403);
+//         }
+//         return response()->json(['message' => 'Welcome Admin!']);
+//     });
+// });
 
 
-Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:sanctum', CheckRole::class . ':admin'])->get('/admin', function () {
-    return response()->json(['message' => 'Hello Admin']);
-});
-
-Route::middleware(['auth:sanctum', CheckRole::class . ':user'])->get('/user', function () {
-    return response()->json(['message' => 'Hello User']);
-});

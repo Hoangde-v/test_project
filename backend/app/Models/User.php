@@ -15,12 +15,24 @@ class User extends Authenticatable
     protected $primaryKey = 'UserID';
     public $incrementing = true;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'phone',
+        'heigt',
+        'weight',
+    ];
 
-    public function feedbacks() {
+
+    public function feedbacks()
+    {
         return $this->hasMany(Feedback::class, 'User_ID');
     }
 
-    public function blogPosts() {
+    public function blogPosts()
+    {
         return $this->hasMany(BlogPost::class, 'User_ID');
     }
 

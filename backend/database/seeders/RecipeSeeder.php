@@ -19,7 +19,7 @@ class RecipeSeeder extends Seeder
 
         foreach ($recipes as $recipe) {
             $mealType = MealType::firstOrCreate([
-                'MealType' => ucfirst($recipe['category'])
+                'mealType' => ucfirst($recipe['category'])
             ]);
 
             $dietTypeName = 'General';
@@ -28,37 +28,37 @@ class RecipeSeeder extends Seeder
             }
 
             $dietType = DietType::firstOrCreate([
-                'DietType' => $dietTypeName
+                'dietType' => $dietTypeName
             ]);
 
             $allergen = Allergen::firstOrCreate([
-                'Allergen' => 'None'
+                'allergen' => 'None'
             ]);
 
             $prepTime = (int) preg_replace('/\D/', '', $recipe['time']);
 
             $meal = Meal::create([
-                'Name' => $recipe['title'],
-                'Description' => $recipe['description'],
-                'Calories' => $recipe['calories'],
-                'Protein' => $recipe['protein'],
-                'Carbs' => $recipe['carb'],
-                'Fat' => $recipe['fats'],
+                'name' => $recipe['title'],
+                'description' => $recipe['description'],
+                'calories' => $recipe['calories'],
+                'protein' => $recipe['protein'],
+                'carbs' => $recipe['carb'],
+                'fat' => $recipe['fats'],
                 'price' => $recipe['price'],
-                'Prep_time' => $prepTime,
-                'DietType_ID' => $dietType->id,
-                'MealType_ID' => $mealType->id,
-                'Allergen_ID' => $allergen->id
+                'prep_time' => $prepTime,
+                'dietType_ID' => $dietType->id,
+                'mealType_ID' => $mealType->id,
+                'allergen_ID' => $allergen->id
             ]);
 
             foreach ($recipe['ingredients'] as $ingredientData) {
                 $ingredient = Ingredient::firstOrCreate(
-                    ['Name' => strtolower($ingredientData['name'])],
+                    ['name' => strtolower($ingredientData['name'])],
                     [
-                        'CaloriesPer100g' => $ingredientData['caloriesPer100g'] ?? 0,
-                        'ProteinPer100g' => $ingredientData['proteinPer100g'] ?? 0,
-                        'CarbsPer100g' => $ingredientData['carbsPer100g'] ?? 0,
-                        'FatPer100g' => $ingredientData['fatPer100g'] ?? 0
+                        'caloriesPer100g' => $ingredientData['caloriesPer100g'] ?? 0,
+                        'proteinPer100g' => $ingredientData['proteinPer100g'] ?? 0,
+                        'carbsPer100g' => $ingredientData['carbsPer100g'] ?? 0,
+                        'fatPer100g' => $ingredientData['fatPer100g'] ?? 0
                     ]
                 );
 
