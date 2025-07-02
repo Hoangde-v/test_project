@@ -226,7 +226,20 @@ const Cart = ({ cartItems, removeFromCart, onPlaceOrder }) => {
                                                 <button
                                                     className="btn btn-outline-secondary rounded-pill px-3"
                                                     onClick={() => {
-                                                        onPlaceOrder({ ...item }, quantity);
+                                                        const quantity = itemQuantities[item.title] || 1;
+                                                        const singleOrder = [{
+                                                            id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+                                                            name: item.title,
+                                                            image: item.image,
+                                                            diet: item.diet,
+                                                            price: item.price,
+                                                            quantity,
+                                                            status: "Pending Confirmation",
+                                                            orderDate: new Date().toISOString(),
+                                                        }];
+
+                                                        onPlaceOrder(singleOrder);
+                                                        removeFromCart(item);
                                                         alert(`Added ${quantity} "${item.title}" to your orders!`);
                                                     }}
                                                 >
@@ -241,7 +254,7 @@ const Cart = ({ cartItems, removeFromCart, onPlaceOrder }) => {
                     )}
                 </div>
             </div>
-            
+
             {selectedItems.length > 0 && (
                 <div className="buy-summary-bar-wrapper">
                     <div className="container d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">

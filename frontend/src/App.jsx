@@ -14,8 +14,9 @@ import AdminDB from './assets/pages/AdminDB.jsx';
 import Orders from './assets/pages/Orders.jsx';
 import Cart from './assets/pages/Cart.jsx';
 import recipesData from './assets/data/Recipes.json';
-
 import ProductManager from './assets/pages/ProductManager';
+import ProtectedRoute from './assets/components/ProtectedRoute.jsx';
+import AdminDashboard from './assets/pages/AdminDB.jsx';
 
 function NotFound() {
   return <h1 className="text-center font-bold my-5">404 - Not Found</h1>;
@@ -33,16 +34,15 @@ function App() {
     localStorage.setItem('nutriplanner-favourites', JSON.stringify(favourites));
   }, [favourites]);
 
-const addToFavourites = async (recipe) => {
-  setFavourites(prev =>
-    prev.some(r => r.title === recipe.title) ? prev : [...prev, recipe]
-  );
-};
+  const addToFavourites = (recipe) => {
+    setFavourites(prev =>
+      prev.some(r => r.title === recipe.title) ? prev : [...prev, recipe]
+    );
+  };
 
-const removeFromFavourites = async (recipe) => {
-
-  setFavourites(prev => prev.filter(r => r.title !== recipe.title));
-};
+  const removeFromFavourites = (recipe) => {
+    setFavourites(prev => prev.filter(r => r.title !== recipe.title));
+  };
 
   const [orders, setOrders] = useState(() => {
     const saved = localStorage.getItem('nutriplanner-orders');
@@ -121,7 +121,8 @@ const removeFromFavourites = async (recipe) => {
     if (!Array.isArray(ordersToPlace)) return;
 
     const orderId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-    const now = Date.now();
+    const orderDate = new Date().toISOString();
+
     const newOrders = ordersToPlace.map(item => ({
       id: orderId,
       name: item.name,
@@ -130,7 +131,7 @@ const removeFromFavourites = async (recipe) => {
       price: item.price,
       quantity: item.quantity,
       status: 'Pending Confirmation',
-      orderDate: new Date(now + idx).toISOString(), 
+      orderDate,
     }));
 
     setOrders(prevOrders => [...prevOrders, ...newOrders]);
@@ -139,15 +140,6 @@ const removeFromFavourites = async (recipe) => {
       removeFromCart({ title: item.name });
     });
   };
-
-  const [totalReturns, setTotalReturns] = useState(() => {
-    const saved = localStorage.getItem('nutriplanner-totalReturns');
-    return saved ? Number(saved) : 0;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('nutriplanner-totalReturns', totalReturns);
-  }, [totalReturns]);
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -162,11 +154,19 @@ const removeFromFavourites = async (recipe) => {
           <Route path="/favourite" element={<FavouritePage favourites={favourites} removeFromFavourites={removeFromFavourites} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/admin" element={<AdminDB orders={orders} setOrders={setOrders} totalReturns={totalReturns} setTotalReturns={setTotalReturns} />} />
-          <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} setTotalReturns={setTotalReturns}/>} />
+          <Route path="/admin" element={<AdminDB />} />
+          <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} onPlaceOrder={handlePlaceOrderFromCart} />} />
           <Route path="/product-manager" element={<ProductManager />} />
+
           <Route path="*" element={<NotFound />} />
+
+          <Route path="/admin-dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+
+          {/* <Route path="/user-dashboard" element={<ProtectedRoute allowedRoles={['user', 'admin']}><UserDashboard /></ProtectedRoute>} /> */}
+          {/* BBao giờ có admin với user dash board thì sẵn mở */}
+
+
         </Routes>
       </main>
       <Footer />
