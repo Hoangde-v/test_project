@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function Header() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -9,8 +12,28 @@ export default function Header() {
     const [dashboardOpen, setDashboardOpen] = useState(false);
     const dashboardRef = useRef(null);
 
-    const userName = localStorage.getItem("userName");
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('userName');
+        setDropdownOpen(false);
+        setDashboardOpen(false);
+        navigate('/login');
+    };
+
+    const [userName, setUserName] = useState(localStorage.getItem("userName"));
     const isLoggedIn = !!userName;
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setUserName(localStorage.getItem("userName"));
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+        return () => window.removeEventListener("storage", handleStorageChange);
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -161,10 +184,7 @@ export default function Header() {
                                 Login
                             </Link>
                             <button
-                                onClick={() => {
-                                    setDropdownOpen(false);
-                                    console.log("Exit clicked");
-                                }}
+                                onClick={handleLogout}
                                 style={{
                                     padding: '8px 12px',
                                     display: 'block',
@@ -195,6 +215,22 @@ export default function Header() {
                                 onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
                             >
                                 Orders
+                            </Link>
+                            <Link
+                                to="/cart"
+                                onClick={() => setDropdownOpen(false)}
+                                style={{
+                                    padding: '8px 12px',
+                                    display: 'block',
+                                    color: '#2c3e50',
+                                    textDecoration: 'none',
+                                    backgroundColor: 'white',
+                                    transition: 'background-color 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                            >
+                                Cart
                             </Link>
                         </div>
                     )}
@@ -276,11 +312,7 @@ export default function Header() {
                                 <button
                                     className="btn btn-outline-danger rounded px-3 py-2 w-100 mt-3 d-flex align-items-center justify-content-center"
                                     style={{ borderRadius: '12px', fontWeight: 500 }}
-                                    onClick={() => {
-                                        localStorage.removeItem('userName');
-                                        setDashboardOpen(false);
-                                        window.location.reload();
-                                    }}
+                                    onClick={handleLogout}
                                 >
                                     <i className="bi bi-box-arrow-right" style={{ marginRight: 8 }}></i>
                                     Logout

@@ -8,7 +8,7 @@ import forkKnife from '../images/RecipeDetail/ForkKnife.png';
 import RecipeNotFound from "../images/RecipeDetail/RecipeNotFound.svg";
 import CartIcon from '../images/Cart/Cart.svg';
 
-const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourites, addToOrders }) => {
+const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourites, addToOrders, cartItems, addToCart, removeFromCart }) => {
   const { title: recipeTitle } = useParams();
   const navigate = useNavigate();
 
@@ -22,7 +22,6 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
 
 
   useEffect(() => {
-
     const decodedRecipeTitle = decodeURIComponent(recipeTitle).toLowerCase();
 
     const foundRecipe = recipesData.find(
@@ -54,6 +53,11 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
     fats: "N/A",
     preparations: []
   };
+
+  useEffect(() => {
+    const isInCart = cartItems.some(item => item.title === recipeToDisplay?.title);
+    setIsCartClicked(isInCart);
+  }, [cartItems, recipeToDisplay]);
 
   const nutritionInfo = {
     calories: recipeToDisplay.calories,
@@ -105,8 +109,29 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
   const handleAddToCartClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsCartClicked(!isCartClicked);
-    console.log(`Add to Cart clicked for: ${recipeToDisplay.title}`);
+
+    if (!recipeToDisplay || recipeToDisplay.title === "Recipe Not Found") return;
+
+    const existingInCart = cartItems.some(item => item.title === recipeToDisplay.title);
+
+    if (existingInCart) {
+      removeFromCart({ title: recipeToDisplay.title });
+      setSelectedQuantity(1);
+      setIsCartClicked(false);
+      alert(`Removed "${recipeToDisplay.title}" from your cart.`);
+    } else {
+      const recipeWithQuantity = {
+        title: recipeToDisplay.title,
+        image: recipeToDisplay.image,
+        diet: recipeToDisplay.diet,
+        price: parseFloat(recipeToDisplay.price) || 0,
+        quantity: selectedQuantity,
+      };
+
+      addToCart(recipeWithQuantity);
+      setIsCartClicked(true);
+      alert(`Added ${selectedQuantity} "${recipeToDisplay.title}" to your cart!`);
+    }
   };
 
   const cartButtonBackgroundColor = isCartClicked ? '#36b0c2' : '#f8f9fa';
@@ -391,6 +416,9 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
                   addToFavourites={addToFavourites}
                   removeFromFavourites={removeFromFavourites}
                   addToOrders={addToOrders}
+                  cartItems={cartItems}
+                  addToCart={addToCart}
+                  removeFromCart={removeFromCart}
                 />
               </div>
             ))

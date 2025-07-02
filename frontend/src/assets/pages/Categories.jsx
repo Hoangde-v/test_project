@@ -4,7 +4,7 @@ import RecipeCard from '../components/RecipeCard.jsx';
 import recipesData from '../data/Recipes.json';
 import '../css/Categories.css';
 
-export default function Categories({ favourites, addToFavourites, removeFromFavourites, addToOrders }) {
+export default function Categories({ favourites, addToFavourites, removeFromFavourites, addToOrders, cartItems, addToCart, removeFromCart }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [ingredientSearch, setIngredientSearch] = useState('');
     const [selectedDiet, setSelectedDiet] = useState('all');
@@ -226,6 +226,9 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
                                                         addToFavourites={addToFavourites}
                                                         removeFromFavourites={removeFromFavourites}
                                                         addToOrders={addToOrders}
+                                                        cartItems={cartItems}
+                                                        addToCart={addToCart}
+                                                        removeFromCart={removeFromCart}
                                                     />
                                                 </div>
                                             ))}

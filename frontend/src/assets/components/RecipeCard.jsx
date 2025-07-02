@@ -16,6 +16,9 @@ const RecipeCard = ({
     addToFavourites,
     removeFromFavourites,
     addToOrders,
+    cartItems,
+    addToCart,
+    removeFromCart
 }) => {
     const recipeUrl = `/recipe/${encodeURIComponent(title)}`;
     const isFavorite =
@@ -23,9 +26,13 @@ const RecipeCard = ({
         Array.isArray(favourites) &&
         favourites.some((favRecipe) => favRecipe.title === title);
 
-    const [isCartClicked, setIsCartClicked] = useState(false);
+    const isCartClicked = Array.isArray(cartItems) && cartItems.some(item => item.title === title);
     const [showQuantityPopup, setShowQuantityPopup] = useState(false);
     const [selectedQuantity, setSelectedQuantity] = useState(1);
+    const [showCartPopup, setShowCartPopup] = useState(false);
+    const [pendingCartRecipe, setPendingCartRecipe] = useState(null);
+    const [cartQuantity, setCartQuantity] = useState(1);
+
 
     const handleFavoriteClick = (e) => {
         e.preventDefault();
@@ -63,7 +70,26 @@ const RecipeCard = ({
     const handleAddToCartClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        setIsCartClicked(!isCartClicked);
+
+        if (isCartClicked) {
+            removeFromCart({ image, title, diet, price });
+            alert(`Removed "${title}" from your cart.`);
+        } else {
+            setPendingCartRecipe({ image, title, diet, price });
+            setCartQuantity(1);
+            setShowCartPopup(true);
+        }
+    };
+
+    const handleCartConfirmQuantity = () => {
+        if (pendingCartRecipe) {
+            const quantity = parseInt(cartQuantity) || 1;
+            const recipeWithQuantity = { ...pendingCartRecipe, quantity };
+            addToCart(recipeWithQuantity);
+            setShowCartPopup(false);
+            alert(`Added ${quantity} "${pendingCartRecipe.title}" to your cart!`);
+            setPendingCartRecipe(null);
+        }
     };
 
     const cartButtonBackgroundColor = isCartClicked ? '#36b0c2' : '#f8f9fa';
@@ -251,6 +277,76 @@ const RecipeCard = ({
                     </div>
                 </div>
             )}
+
+            {showCartPopup && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                    style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+                >
+                    <div className="bg-white p-4 rounded-4 shadow" style={{ width: '360px' }}>
+                        <h5 className="fw-bold mb-3">
+                            Select Quantity for
+                            <p className='mt-1' style={{ color: "#36b0c2" }}>"{pendingCartRecipe?.title}"</p>
+                        </h5>
+
+                        <label className="form-label fw-semibold">Quantity</label>
+                        <div className="d-flex align-items-center gap-2 mb-3">
+                            <button
+                                className="btn btn-outline-secondary px-3 py-1"
+                                onClick={() => setCartQuantity(Math.max(1, cartQuantity - 1))}
+                            >
+                                −
+                            </button>
+
+                            <input
+                                type="number"
+                                className="form-control text-center"
+                                style={{ maxWidth: '150px', fontWeight: 'bold', borderRadius: '8px' }}
+                                value={cartQuantity}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    const num = parseInt(val);
+                                    if (!isNaN(num) && num > 0) {
+                                        setCartQuantity(num);
+                                    } else if (val === '') {
+                                        setCartQuantity('');
+                                    }
+                                }}
+                            />
+
+                            <button
+                                className="btn btn-outline-secondary px-3 py-1"
+                                onClick={() => setCartQuantity(cartQuantity + 1)}
+                            >
+                                +
+                            </button>
+                        </div>
+
+                        <div className="mb-3">
+                            <strong>Total Price: </strong>
+                            <span className="text-danger fw-semibold">
+                                ${(parseFloat(pendingCartRecipe?.price || 0) * cartQuantity).toFixed(2)}
+                            </span>
+                        </div>
+
+                        <div className="d-flex justify-content-end gap-2">
+                            <button
+                                className="btn btn-outline-secondary"
+                                onClick={() => setShowCartPopup(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleCartConfirmQuantity}
+                            >
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </>
     );
 };
