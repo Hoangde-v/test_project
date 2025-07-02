@@ -55,12 +55,8 @@ function App() {
 
   const addOrder = (newRecipe) => {
     setOrders(prev => {
-      const today = new Date().toISOString().split('T')[0];
-
       const newId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-
       const details = recipesData.find(r => r.title === newRecipe.name) || {};
-
       return [
         ...prev,
         {
@@ -72,7 +68,7 @@ function App() {
           dietClass: newRecipe.dietClass || details.dietClass || 'bg-secondary',
           quantity: newRecipe.quantity || 1,
           price: newRecipe.price ?? details.price ?? 0,
-          orderDate: today,
+          orderDate: Date.now(), 
         }
       ];
     });
@@ -120,26 +116,33 @@ function App() {
   const handlePlaceOrderFromCart = (ordersToPlace) => {
     if (!Array.isArray(ordersToPlace)) return;
 
-    const orderId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-    const orderDate = new Date().toISOString();
-
     const newOrders = ordersToPlace.map(item => ({
-      id: orderId,
+      id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       name: item.name,
       image: item.image,
       diet: item.diet,
       price: item.price,
       quantity: item.quantity,
       status: 'Pending Confirmation',
-      orderDate,
+      orderDate: Date.now(), 
     }));
 
-    setOrders(prevOrders => [...prevOrders, ...newOrders]);
+    setOrders(prevOrders => [...newOrders, ...prevOrders]);
 
     ordersToPlace.forEach(item => {
       removeFromCart({ title: item.name });
     });
   };
+
+  const [totalReturns, setTotalReturns] = useState(() => {
+    const saved = localStorage.getItem('nutriplanner-totalReturns');
+    return saved ? Number(saved) : 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('nutriplanner-totalReturns', totalReturns);
+  }, [totalReturns]);
+
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -154,7 +157,7 @@ function App() {
           <Route path="/favourite" element={<FavouritePage favourites={favourites} removeFromFavourites={removeFromFavourites} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/admin" element={<AdminDB />} />
+          <Route path="/admin" element={<AdminDB orders={orders} setOrders={setOrders} totalReturns={totalReturns} setTotalReturns={setTotalReturns} />} />
           <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} onPlaceOrder={handlePlaceOrderFromCart} />} />
           <Route path="/product-manager" element={<ProductManager />} />
