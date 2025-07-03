@@ -4,8 +4,8 @@
 npm i        (frontend)
 composer i   (backend)
 
-- Cài thư viện biểu đồ (frontend)
-npm install chart.js react-chartjs-2
+- Cài thư viện biểu đồ 
+npm install chart.js react-chartjs-2 (frontend)
 
 - Copy .env và sửa lại DB   (backend)
 WINDOW:           copy .env.example .env
