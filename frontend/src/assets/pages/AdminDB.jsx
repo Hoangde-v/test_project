@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import recipesData from '../data/Recipes.json';
 import RecipeCard from '../components/RecipeCard.jsx';
 import { Bar, Line } from 'react-chartjs-2';
@@ -64,33 +64,6 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-    const barData = {
-        labels: monthLabels,
-        datasets: [
-            {
-                label: 'Revenue',
-                data: monthlyRevenue,
-                backgroundColor: '#36b0c2',
-            },
-        ],
-    };
-
-    const barOptions = {
-        responsive: true,
-        plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true },
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: value => '$' + value.toLocaleString(),
-                },
-            },
-        },
-    };
-
     // Tính doanh thu hôm nay và tuần này
     const now = new Date();
     const todayStr = now.toLocaleDateString();
@@ -134,6 +107,49 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
             }
         }
     });
+
+    const mixedData = {
+        labels: monthLabels,
+        datasets: [
+            {
+                type: 'line',
+                label: 'Monthly Revenue (Line)',
+                data: monthlyRevenue,
+                borderColor: '#e67e22',
+                backgroundColor: '#e67e22',                              
+                fill: false,
+                tension: 0.3,
+                yAxisID: 'y',
+            },
+
+        ],
+    };
+
+    const mixedOptions = {
+        responsive: true,
+        plugins: {
+            legend: { display: false }, 
+            tooltip: { enabled: true },
+        },
+        scales: {
+            y: {
+                beginAtZero: true, 
+                ticks: {
+                    callback: value => '$' + value.toLocaleString(), // Hiển thị giá trị với ký hiệu $
+                },
+            },
+        },
+    };
+
+    // Thêm state cho phân trang
+    const [orderPage, setOrderPage] = useState(1);
+    const ORDERS_PER_PAGE = 10;
+    const totalOrderPages = Math.ceil(orders.length / ORDERS_PER_PAGE);
+
+    // Lấy danh sách đơn cho trang hiện tại
+    const pagedOrders = [...orders]
+        .sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+        .slice((orderPage - 1) * ORDERS_PER_PAGE, orderPage * ORDERS_PER_PAGE);
 
     return (
         <div className="container py-4" style={{ maxWidth: 1200 }}>
@@ -179,8 +195,8 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                     <div className="col-lg-8">
                         <div className="p-4 rounded-3 bg-white border h-100">
                             <h5 className="fw-bold mb-0" style={{ color: '#2c3e50' }}>Income this month</h5>
-                            <div className="mt-3 w-100" style={{ height: 300 }}>
-                                <Line data={barData} options={barOptions} />
+                            <div className="mt-3 w-100" style={{ height: 300, paddingLeft: 50, paddingTop: 0 }}>
+                                <Bar data={mixedData} options={mixedOptions} />
                             </div>
                         </div>
                     </div>
@@ -257,7 +273,7 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
             <div className="row g-3 mt-4">
                 <div className="col-12">
                     <div className="p-4 rounded-3 bg-white border">
-                        <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Recent Orders</h5>
+                        <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Orders Management</h5>
                         <div className="table-responsive">
                             <table className="table align-middle mb-0">
                                 <thead>
@@ -270,47 +286,67 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {orders.length === 0 && (
+                                    {pagedOrders.length === 0 && (
                                         <tr>
                                             <td colSpan={5} className="text-center text-muted py-4">
                                                 No orders found.
                                             </td>
                                         </tr>
                                     )}
-                                    {[...orders]
-                                        .sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate)).slice(0, 10)
-                                        .map(order => (
-                                            <tr key={order.id}>
-                                                <td>{order.id}</td>
-                                                <td>{order.customer || "Unknown"}</td>
-                                                <td>{order.orderDate ? new Date(order.orderDate).toLocaleString() : "N/A"}</td>
-                                                <td>
-                                                    <span className={`badge bg-${order.status === "Pending Confirmation" ? "warning" : order.status === "Preparing Food" ? "info" : order.status === "Out for Delivery" ? "primary" : "success"}`}>
-                                                        {order.status}
-                                                    </span>
-                                                </td>
-                                                <td className="text-end" style={{ minWidth: 220 }}>
-                                                    <button
-                                                        className="btn btn-sm btn-outline-success me-2"
-                                                        disabled={order.status !== "Pending Confirmation"}
-                                                        style={{ visibility: order.status === "Pending Confirmation" ? "visible" : "hidden" }}
-                                                        onClick={() => handleConfirmOrder(order.id)}
-                                                    >
-                                                        Confirm Order
-                                                    </button>
-                                                    <button className="btn btn-sm btn-outline-primary me-2">
-                                                        Print Invoice
-                                                    </button>
-                                                    <button className="btn btn-sm btn-outline-info">
-                                                        Track Shipment
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                    {pagedOrders.map(order => (
+                                        <tr key={order.id}>
+                                            <td>{order.id}</td>
+                                            <td>{order.customer || "Unknown"}</td>
+                                            <td>{order.orderDate ? new Date(order.orderDate).toLocaleString() : "N/A"}</td>
+                                            <td>
+                                                <span className={`badge bg-${order.status === "Pending Confirmation" ? "warning" : order.status === "Preparing Food" ? "info" : order.status === "Out for Delivery" ? "primary" : "success"}`}>
+                                                    {order.status}
+                                                </span>
+                                            </td>
+                                            <td className="text-end" style={{ minWidth: 220 }}>
+                                                <button
+                                                    className="btn btn-sm btn-outline-success me-2"
+                                                    disabled={order.status !== "Pending Confirmation"}
+                                                    style={{ visibility: order.status === "Pending Confirmation" ? "visible" : "hidden" }}
+                                                    onClick={() => handleConfirmOrder(order.id)}
+                                                >
+                                                    Confirm Order
+                                                </button>
+                                                <button className="btn btn-sm btn-outline-primary me-2">
+                                                    Print Invoice
+                                                </button>
+                                                <button className="btn btn-sm btn-outline-info">
+                                                    Track Shipment
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
-
+                        {/* Phân trang nếu số đơn vượt quá 10 */}
+                        {totalOrderPages > 1 && (
+                            <div className="d-flex justify-content-end mt-3">
+                                <nav>
+                                    <ul className="pagination mb-0">
+                                        {Array.from({ length: totalOrderPages }, (_, idx) => (
+                                            <li
+                                                key={idx + 1}
+                                                className={`page-item${orderPage === idx + 1 ? ' active' : ''}`}
+                                            >
+                                                <button
+                                                    className="page-link"
+                                                    style={{ minWidth: 40 }}
+                                                    onClick={() => setOrderPage(idx + 1)}
+                                                >
+                                                    {idx + 1}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </nav>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
