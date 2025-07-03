@@ -145,7 +145,7 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
             y: {
                 beginAtZero: true, 
                 ticks: {
-                    callback: value => '$' + value.toLocaleString(), // Hiển thị giá trị với ký hiệu $
+                    callback: value => '$' + value.toLocaleString(), 
                 },
             },
         },
@@ -290,7 +290,6 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                             </div>
                         </div>
                     </div>
-
                     {/* Order Management */}
                     <div className="row g-3 mt-4">
                         <div className="col-12">
@@ -334,7 +333,6 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                                                         >
                                                             Confirm Order
                                                         </button>
-                                                        {/* Nút chuyển cho đơn vị vận chuyển */}
                                                         {order.status === "Preparing Food" && (
                                                             <button
                                                                 className="btn btn-sm btn-outline-warning me-2"
