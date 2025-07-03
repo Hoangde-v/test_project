@@ -43,6 +43,16 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
         );
     };
 
+    const handleShipOrder = (orderId) => {
+        setOrders(prev =>
+            prev.map(order =>
+                order.id === orderId
+                    ? { ...order, status: "Out for Delivery" }
+                    : order
+            )
+        );
+    };
+
     // Tính doanh thu từng tháng trong năm hiện tại
     const monthlyRevenue = Array(12).fill(0);
     orders.forEach(order => {
@@ -324,6 +334,15 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                                                         >
                                                             Confirm Order
                                                         </button>
+                                                        {/* Nút chuyển cho đơn vị vận chuyển */}
+                                                        {order.status === "Preparing Food" && (
+                                                            <button
+                                                                className="btn btn-sm btn-outline-warning me-2"
+                                                                onClick={() => handleShipOrder(order.id)}
+                                                            >
+                                                                Shipment Confirm
+                                                            </button>
+                                                        )}
                                                         <button className="btn btn-sm btn-outline-primary me-2">
                                                             Print Invoice
                                                         </button>
