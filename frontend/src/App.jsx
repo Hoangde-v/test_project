@@ -16,7 +16,6 @@ import Cart from './assets/pages/Cart.jsx';
 import recipesData from './assets/data/Recipes.json';
 import ProductManager from './assets/pages/ProductManager';
 import ProtectedRoute from './assets/components/ProtectedRoute.jsx';
-import AdminDashboard from './assets/pages/AdminDB.jsx';
 
 function NotFound() {
   return <h1 className="text-center font-bold my-5">404 - Not Found</h1>;
@@ -157,14 +156,12 @@ function App() {
           <Route path="/favourite" element={<FavouritePage favourites={favourites} removeFromFavourites={removeFromFavourites} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/admin" element={<AdminDB orders={orders} setOrders={setOrders} totalReturns={totalReturns} setTotalReturns={setTotalReturns} />} />
+          <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><AdminDB orders={orders} setOrders={setOrders} totalReturns={totalReturns} setTotalReturns={setTotalReturns} /></ProtectedRoute>} />
           <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} onPlaceOrder={handlePlaceOrderFromCart} />} />
           <Route path="/product-manager" element={<ProductManager />} />
 
           <Route path="*" element={<NotFound />} />
-
-          <Route path="/admin-dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
 
           {/* <Route path="/user-dashboard" element={<ProtectedRoute allowedRoles={['user', 'admin']}><UserDashboard /></ProtectedRoute>} /> */}
           {/* BBao giờ có admin với user dash board thì sẵn mở */}
