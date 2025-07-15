@@ -137,44 +137,25 @@ export default function Header() {
                             zIndex: 1001,
                             minWidth: '120px'
                         }}>
-                            <Link
-                                to="/login"
-                                onClick={() => setDropdownOpen(false)}
-                                style={{
-                                    padding: '8px 12px',
-                                    display: 'block',
-                                    color: '#2c3e50',
-                                    textDecoration: 'none',
-                                    backgroundColor: 'white',
-                                    transition: 'background-color 0.2s'
-                                }}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                            >
-                                Login
-                            </Link>
-                            <button
-                                onClick={() => {
-                                    setDropdownOpen(false);
-                                    console.log("Exit clicked");
-                                    localStorage.clear();
-                                    window.location.href = "/login";
-                                }}
-                                style={{
-                                    padding: '8px 12px',
-                                    display: 'block',
-                                    width: '100%',
-                                    textAlign: 'left',
-                                    border: 'none',
-                                    backgroundColor: 'white',
-                                    color: '#2c3e50',
-                                    cursor: 'pointer'
-                                }}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                            >
-                                Exit
-                            </button>
+                            {!isLoggedIn && (
+                                <Link
+                                    to="/login"
+                                    onClick={() => setDropdownOpen(false)}
+                                    style={{
+                                        padding: '8px 12px',
+                                        display: 'block',
+                                        color: '#2c3e50',
+                                        textDecoration: 'none',
+                                        backgroundColor: 'white',
+                                        transition: 'background-color 0.2s'
+                                    }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                                >
+                                    Login
+                                </Link>
+                            )}
+
                             <Link
                                 to="/orders"
                                 onClick={() => setDropdownOpen(false)}
@@ -223,6 +204,30 @@ export default function Header() {
                             >
                                 Dashboard
                             </Link>
+                            { isLoggedIn && (
+                                <button
+                                onClick={() => {
+                                    setDropdownOpen(false);
+                                    console.log("Exit clicked");
+                                    localStorage.clear();
+                                    window.location.href = "/login";
+                                }}
+                                style={{
+                                    padding: '8px 12px',
+                                    display: 'block',
+                                    width: '100%',
+                                    textAlign: 'left',
+                                    border: 'none',
+                                    backgroundColor: 'white',
+                                    color: '#2c3e50',
+                                    cursor: 'pointer'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                            >
+                                Exit
+                            </button>
+                            )}
                         </div>
                     )}
                 </div>
