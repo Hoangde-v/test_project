@@ -157,6 +157,8 @@ export default function Header() {
                                 onClick={() => {
                                     setDropdownOpen(false);
                                     console.log("Exit clicked");
+                                    localStorage.clear();
+                                    window.location.href = "/login";
                                 }}
                                 style={{
                                     padding: '8px 12px',
@@ -218,7 +220,7 @@ export default function Header() {
                                 }}
                                 onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
                                 onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                            >                    
+                            >
                                 Dashboard
                             </Link>
                         </div>
@@ -302,9 +304,9 @@ export default function Header() {
                                     className="btn btn-outline-danger rounded px-3 py-2 w-100 mt-3 d-flex align-items-center justify-content-center"
                                     style={{ borderRadius: '12px', fontWeight: 500 }}
                                     onClick={() => {
-                                        localStorage.removeItem('userName');
-                                        setDashboardOpen(false);
-                                        window.location.reload();
+                                        localStorage.clear();
+                                        setDropdownOpen(false);
+                                        window.location.href = "/login";
                                     }}
                                 >
                                     <i className="bi bi-box-arrow-right" style={{ marginRight: 8 }}></i>

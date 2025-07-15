@@ -33,9 +33,9 @@ function Login() {
 
         // Phân luồng theo role
         if (data.user.role === 'admin') {
-          navigate('/admin-dashboard');
+          navigate('/admin');
         } else {
-          navigate('/user-dashboard');
+          navigate('/categories');
         }
 
       } else {
