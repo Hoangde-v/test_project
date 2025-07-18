@@ -204,29 +204,29 @@ export default function Header() {
                             >
                                 Dashboard
                             </Link>
-                            { isLoggedIn && (
+                            {isLoggedIn && (
                                 <button
-                                onClick={() => {
-                                    setDropdownOpen(false);
-                                    console.log("Exit clicked");
-                                    localStorage.clear();
-                                    window.location.href = "/login";
-                                }}
-                                style={{
-                                    padding: '8px 12px',
-                                    display: 'block',
-                                    width: '100%',
-                                    textAlign: 'left',
-                                    border: 'none',
-                                    backgroundColor: 'white',
-                                    color: '#2c3e50',
-                                    cursor: 'pointer'
-                                }}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                            >
-                                Exit
-                            </button>
+                                    onClick={() => {
+                                        setDropdownOpen(false);
+                                        console.log("Exit clicked");
+                                        localStorage.clear();
+                                        window.location.href = "/login";
+                                    }}
+                                    style={{
+                                        padding: '8px 12px',
+                                        display: 'block',
+                                        width: '100%',
+                                        textAlign: 'left',
+                                        border: 'none',
+                                        backgroundColor: 'white',
+                                        color: '#2c3e50',
+                                        cursor: 'pointer'
+                                    }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f0f0f0'}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                                >
+                                    Exit
+                                </button>
                             )}
                         </div>
                     )}

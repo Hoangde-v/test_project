@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import '../css/Login.css';
 import CheffImage from '../images/Home/Cheff1.png';
+
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -81,16 +81,7 @@ function Login() {
           <button type="submit">Sign In</button>
         </form>
         <p className="signup-link">
-          Don't have an account? <Link
-            to="/signup"
-            style={{
-              textDecoration: 'underline',
-              color: '#36B0C2',
-              transition: 'color 0.3s ease-in-out',
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = 'rgb(43 137 151)'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#36B0C2'}
-          >Sign Up</Link>
+          Don't have an account? <a onClick={() => navigate('/signup')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Sign Up</a>
         </p>
       </div>
 
