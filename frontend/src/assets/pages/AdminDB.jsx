@@ -126,7 +126,7 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                 label: 'Monthly Revenue (Line)',
                 data: monthlyRevenue,
                 borderColor: '#e67e22',
-                backgroundColor: '#e67e22',                              
+                backgroundColor: '#e67e22',
                 fill: false,
                 tension: 0.3,
                 yAxisID: 'y',
@@ -138,14 +138,14 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
     const mixedOptions = {
         responsive: true,
         plugins: {
-            legend: { display: false }, 
+            legend: { display: false },
             tooltip: { enabled: true },
         },
         scales: {
             y: {
-                beginAtZero: true, 
+                beginAtZero: true,
                 ticks: {
-                    callback: value => '$' + value.toLocaleString(), 
+                    callback: value => '$' + value.toLocaleString(),
                 },
             },
         },
@@ -174,124 +174,77 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
             </div>
 
             {showRevenueAnalysis ? (
-            <>
-                <div className="row g-3 mb-4">
-                    <div className="col-md-3">
-                        <div className="p-3 rounded-3 bg-white border d-flex flex-column">
-                            <span className="text-muted" style={{ fontSize: 15 }}>Total customers</span>
-                            <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>567,899</span>
+                <>
+                    <div className="row g-3 mb-4">
+                        <div className="col-md-3">
+                            <div className="p-3 rounded-3 bg-white border d-flex flex-column">
+                                <span className="text-muted" style={{ fontSize: 15 }}>Total customers</span>
+                                <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>567,899</span>
+                            </div>
+                        </div>
+                        <div className="col-md-3">
+                            <div className="p-3 rounded-3 bg-white border d-flex flex-column">
+                                <span className="text-muted" style={{ fontSize: 15 }}>Total revenue</span>
+                                <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>
+                                    ${totalRevenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="col-md-3">
+                            <div className="p-3 rounded-3 bg-white border d-flex flex-column">
+                                <span className="text-muted" style={{ fontSize: 15 }}>Total orders</span>
+                                <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>
+                                    {totalConfirmedOrderIds}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="col-md-3">
+                            <div className="p-3 rounded-3 bg-white border d-flex flex-column">
+                                <span className="text-muted" style={{ fontSize: 15 }}>Total returns</span>
+                                <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>
+                                    {totalReturns.toLocaleString()}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div className="col-md-3">
-                        <div className="p-3 rounded-3 bg-white border d-flex flex-column">
-                            <span className="text-muted" style={{ fontSize: 15 }}>Total revenue</span>
-                            <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>
-                                ${totalRevenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-                            </span>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="p-3 rounded-3 bg-white border d-flex flex-column">
-                            <span className="text-muted" style={{ fontSize: 15 }}>Total orders</span>
-                            <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>
-                                {totalConfirmedOrderIds}
-                            </span>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="p-3 rounded-3 bg-white border d-flex flex-column">
-                            <span className="text-muted" style={{ fontSize: 15 }}>Total returns</span>
-                            <span className="fw-bold" style={{ fontSize: 24, color: '#36b0c2' }}>
-                                {totalReturns.toLocaleString()}
-                            </span>
-                        </div>
-                    </div>
-                </div>
 
-                <div className="mb-4">
-                    <div className="row g-3">
-                        <div className="col-lg-8">
-                            <div className="p-4 rounded-3 bg-white border h-100">
-                                <h5 className="fw-bold mb-0" style={{ color: '#2c3e50' }}>Income this month</h5>
-                                <div className="mt-3 w-100" style={{ height: 300, paddingLeft: 50, paddingTop: 0 }}>
-                                    <Bar data={mixedData} options={mixedOptions} />
+                    <div className="mb-4">
+                        <div className="row g-3">
+                            <div className="col-lg-8">
+                                <div className="p-4 rounded-3 bg-white border h-100">
+                                    <h5 className="fw-bold mb-0" style={{ color: '#2c3e50' }}>Income this month</h5>
+                                    <div className="mt-3 w-100" style={{ height: 300, paddingLeft: 50, paddingTop: 0 }}>
+                                        <Bar data={mixedData} options={mixedOptions} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-4 d-flex flex-column gap-3">
-                            <div className="p-4 rounded-3 bg-white border flex-fill">
-                                <span className="text-muted" style={{ fontSize: 20 }}>Daily</span>
-                                <div className="fw-bold" style={{ fontSize: 35, color: '#36b0c2' }}>
-                                    ${revenueToday.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                            <div className="col-lg-4 d-flex flex-column gap-3">
+                                <div className="p-4 rounded-3 bg-white border flex-fill">
+                                    <span className="text-muted" style={{ fontSize: 20 }}>Daily</span>
+                                    <div className="fw-bold" style={{ fontSize: 35, color: '#36b0c2' }}>
+                                        ${revenueToday.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-4 rounded-3 bg-white border flex-fill">
-                                <span className="text-muted" style={{ fontSize: 20 }}>Weekly</span>
-                                <div className="fw-bold" style={{ fontSize: 35, color: '#36b0c2' }}>
-                                    ${revenueThisWeek.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                <div className="p-4 rounded-3 bg-white border flex-fill">
+                                    <span className="text-muted" style={{ fontSize: 20 }}>Weekly</span>
+                                    <div className="fw-bold" style={{ fontSize: 35, color: '#36b0c2' }}>
+                                        ${revenueThisWeek.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-4 rounded-3 bg-white border flex-fill">
-                                <span className="text-muted" style={{ fontSize: 20 }}>Yearly</span>
-                                <div className="fw-bold" style={{ fontSize: 35, color: '#36b0c2' }}>
-                                    ${revenueThisYear.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                <div className="p-4 rounded-3 bg-white border flex-fill">
+                                    <span className="text-muted" style={{ fontSize: 20 }}>Yearly</span>
+                                    <div className="fw-bold" style={{ fontSize: 35, color: '#36b0c2' }}>
+                                        ${revenueThisYear.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </>
+                </>
             ) : (
                 <>
-                    {/* Most Ordered Items */}
-                    <div className="mb-4">
-                        <div className="p-4 rounded-3 bg-white border">
-                            <h5 className="fw-bold mb-0" style={{ color: '#2c3e50' }}>Most Ordered Items</h5>
-                            <div className="row mt-3">
-                                {
-                                    (() => {
-                                        const orderCountMap = {};
-                                        orders.forEach(order => {
-                                            if (order.name) {
-                                                orderCountMap[order.name] = (orderCountMap[order.name] || 0) + (order.quantity || 1);
-                                            }
-                                        });
-                                        const itemsWithCount = recipesData
-                                            .map(recipe => ({
-                                                ...recipe,
-                                                orderCount: orderCountMap[recipe.title] || 0
-                                            }))
-                                            .sort((a, b) => b.orderCount - a.orderCount)
-                                            .slice(0, 3);
-
-                                        return itemsWithCount.map(recipe => (
-                                            <div className="col-md-4 mb-3" key={recipe.id}>
-                                                <div className="card rounded-3 h-100 shadow-sm">
-                                                    <img
-                                                        src={recipe.image}
-                                                        className="card-img-top"
-                                                        alt={recipe.title}
-                                                        style={{ height: 160, objectFit: 'cover', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
-                                                    />
-                                                    <div className="card-body d-flex flex-column">
-                                                        <h6 className="card-title fw-bold mb-2" style={{ color: '#36b0c2' }}>{recipe.title}</h6>
-                                                        <div className="mt-auto">
-                                                            <span className="badge bg-primary text-light">
-                                                                <i className="bi bi-bag-fill me-1"></i>
-                                                                {recipe.orderCount} Orders
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ));
-                                    })()
-                                }
-                            </div>
-                        </div>
-                    </div>
                     {/* Order Management */}
-                    <div className="row g-3 mt-4">
+                    <div className="row g-3 mb-4">
                         <div className="col-12">
                             <div className="p-4 rounded-3 bg-white border">
                                 <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Orders Management</h5>
@@ -376,6 +329,54 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                                         </nav>
                                     </div>
                                 )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Most Ordered Items */}
+                    <div className="mt-4">
+                        <div className="p-4 rounded-3 bg-white border">
+                            <h5 className="fw-bold mb-0" style={{ color: '#2c3e50' }}>Most Ordered Items</h5>
+                            <div className="row mt-3">
+                                {
+                                    (() => {
+                                        const orderCountMap = {};
+                                        orders.forEach(order => {
+                                            if (order.name) {
+                                                orderCountMap[order.name] = (orderCountMap[order.name] || 0) + (order.quantity || 1);
+                                            }
+                                        });
+                                        const itemsWithCount = recipesData
+                                            .map(recipe => ({
+                                                ...recipe,
+                                                orderCount: orderCountMap[recipe.title] || 0
+                                            }))
+                                            .sort((a, b) => b.orderCount - a.orderCount)
+                                            .slice(0, 3);
+
+                                        return itemsWithCount.map(recipe => (
+                                            <div className="col-md-4 mb-3" key={recipe.id}>
+                                                <div className="card rounded-3 h-100 shadow-sm">
+                                                    <img
+                                                        src={recipe.image}
+                                                        className="card-img-top"
+                                                        alt={recipe.title}
+                                                        style={{ height: 160, objectFit: 'cover', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+                                                    />
+                                                    <div className="card-body d-flex flex-column">
+                                                        <h6 className="card-title fw-bold mb-2" style={{ color: '#36b0c2' }}>{recipe.title}</h6>
+                                                        <div className="mt-auto">
+                                                            <span className="badge bg-primary text-light">
+                                                                <i className="bi bi-bag-fill me-1"></i>
+                                                                {recipe.orderCount} Orders
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ));
+                                    })()
+                                }
                             </div>
                         </div>
                     </div>

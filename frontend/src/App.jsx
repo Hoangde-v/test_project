@@ -67,7 +67,7 @@ function App() {
           dietClass: newRecipe.dietClass || details.dietClass || 'bg-secondary',
           quantity: newRecipe.quantity || 1,
           price: newRecipe.price ?? details.price ?? 0,
-          orderDate: Date.now(), 
+          orderDate: Date.now(),
         }
       ];
     });
@@ -115,15 +115,17 @@ function App() {
   const handlePlaceOrderFromCart = (ordersToPlace) => {
     if (!Array.isArray(ordersToPlace)) return;
 
+    const sharedOrderId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
     const newOrders = ordersToPlace.map(item => ({
-      id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+      id: sharedOrderId,
       name: item.name,
       image: item.image,
       diet: item.diet,
       price: item.price,
       quantity: item.quantity,
       status: 'Pending Confirmation',
-      orderDate: Date.now(), 
+      orderDate: Date.now(),
     }));
 
     setOrders(prevOrders => [...newOrders, ...prevOrders]);
@@ -132,6 +134,7 @@ function App() {
       removeFromCart({ title: item.name });
     });
   };
+
 
   const [totalReturns, setTotalReturns] = useState(() => {
     const saved = localStorage.getItem('nutriplanner-totalReturns');
@@ -164,7 +167,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
           {/* <Route path="/user-dashboard" element={<ProtectedRoute allowedRoles={['user', 'admin']}><UserDashboard /></ProtectedRoute>} /> */}
-          {/* BBao giờ có admin với user dash board thì sẵn mở */}
+          {/* Bao giờ có admin với user dash board thì sẵn mở */}
 
 
         </Routes>
