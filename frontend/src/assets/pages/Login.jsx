@@ -70,13 +70,13 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <div className="login-options">
-            <div className="remember-me">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember me</label>
-            </div>
-            <a href="#">Forgot Password?</a>
+          <div className="form-remember">
+            <label className="checkbox-remember">
+              <input type="checkbox" /> Remember me
+            </label>
+            <a href="#" className="forgot-link">Forgot Password?</a>
           </div>
+
 
           <button type="submit">Sign In</button>
         </form>
