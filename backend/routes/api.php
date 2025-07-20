@@ -14,3 +14,5 @@ Route::middleware(['auth:sanctum', CheckRole::class . ':admin'])->get('/admin', 
 Route::middleware(['auth:sanctum', CheckRole::class . ':user'])->get('/user', function () {
     return response()->json(['message' => 'Hello User']);
 });
+
+Route::post('/register', [AuthController::class, 'register']);

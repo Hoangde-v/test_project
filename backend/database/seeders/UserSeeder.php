@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'phone' => '0000000000',
             'gender' => 'other',
-            'YearOfBirth' => 2000,
+            'dateOfBirth' => '2000-01-01',
             'Height' => 170.00,
             'Weight' => 70.00,
             'role' => 'admin'
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('user123'),
             'phone' => '1111111111',
             'gender' => 'other',
-            'YearOfBirth' => 2000,
+            'dateOfBirth' => '2000-01-01',
             'Height' => 170.00,
             'Weight' => 70.00,
             'role' => 'user'

@@ -8,12 +8,12 @@ function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [dob, setDob] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
     const [captcha, setCaptcha] = useState('');
     const [userCaptcha, setUserCaptcha] = useState('');
     const navigate = useNavigate();
 
-    // 👉 Hàm tạo captcha ngẫu nhiên
     const generateCaptcha = () => {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let code = '';
@@ -37,7 +37,7 @@ function Signup() {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/register', {
+            const response = await fetch('http://localhost:8000/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,15 +46,28 @@ function Signup() {
                     name,
                     email,
                     password,
-                    dob
+                    password_confirmation: passwordConfirm,
+                    dateOfBirth,
                 }),
             });
 
-            const data = await response.json();
+            const text = await response.text();
+            let data;
+
+            try {
+                data = JSON.parse(text);
+            } catch (err) {
+                console.error("Phản hồi không phải JSON:", text);
+                alert('Lỗi server không phản hồi đúng định dạng.');
+                return;
+            }
 
             if (response.ok) {
                 alert('Đăng ký thành công!');
                 navigate('/login');
+            } else if (response.status === 422 && data.errors) {
+                const firstError = Object.values(data.errors)[0][0];
+                alert(`Lỗi: ${firstError}`);
             } else {
                 alert('Đăng ký thất bại: ' + (data.message || 'Thông tin không hợp lệ'));
             }
@@ -63,6 +76,7 @@ function Signup() {
             console.error('Signup error:', error);
         }
     };
+
 
     return (
         <div className="login-container">
@@ -96,13 +110,20 @@ function Signup() {
                         required
                     />
                     <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={passwordConfirm}
+                        onChange={(e) => setPasswordConfirm(e.target.value)}
+                        required
+                    />
+                    <input
                         type="date"
-                        value={dob}
-                        onChange={(e) => setDob(e.target.value)}
+                        value={dateOfBirth}
+                        onChange={(e) => setDateOfBirth(e.target.value)}
                         placeholder="Date of Birth"
+                        required
                     />
 
-                    {/* Captcha */}
                     <div className="captcha-row">
                         <span className="captcha-code">{captcha}</span>
                         <button type="button" className="refresh-captcha" onClick={generateCaptcha}>🔁</button>

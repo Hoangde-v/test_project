@@ -35,7 +35,7 @@ function Login() {
         if (data.user.role === 'admin') {
           navigate('/admin-dashboard');
         } else {
-          navigate('/user-dashboard');
+          navigate('/');
         }
 
       } else {
