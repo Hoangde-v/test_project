@@ -62,7 +62,7 @@ class DishSeeder extends Seeder
                     ]
                 );
 
-                $meal->ingredients()->attach($ingredient->IngredientID);
+                $meal->ingredients()->attach($ingredient->id);
             }
         }
     }

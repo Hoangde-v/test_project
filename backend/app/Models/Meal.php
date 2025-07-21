@@ -24,6 +24,6 @@ class Meal extends Model
 
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'ingredient_meal', 'IngredientID');
+        return $this->belongsToMany(Ingredient::class, 'ingredient_meal','meal_id', 'ingredient_id');
     }
 }
