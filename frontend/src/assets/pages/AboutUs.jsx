@@ -28,7 +28,7 @@ export default function AboutUsPage() {
                             Welcome to Foodieland – Your Partner in Smart, Healthy Eating!
                         </p>
                         <p style={{ paddingBottom: "20px" }}>
-                            At Foodieland, we believe that food should be both nourishing and enjoyable. We're here to simplify your journey to better health by offering smart meal planning, balanced recipes, and practical nutrition tips—all tailored to fit your lifestyle.
+                            At Foodieland, we believe that food should be both nourishing and enjoyable. We're here to simplify your journey to better health by offering smart meal planning, balanced dishes, and practical nutrition tips—all tailored to fit your lifestyle.
                         </p>
                         <p style={{ paddingBottom: "20px" }}>
                             Whether you're managing a busy schedule, working toward fitness goals, or simply looking to eat more mindfully, Foodieland helps take the guesswork out of eating well. Our mission is to empower you with the tools, knowledge, and inspiration to make healthier food choices every day—without sacrificing flavor or convenience.

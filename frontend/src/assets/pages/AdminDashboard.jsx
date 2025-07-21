@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import recipesData from '../data/Recipes.json';
+import recipesData from '../data/Dishes.json';
 import RecipeCard from '../components/RecipeCard.jsx';
 import { Bar, Line } from 'react-chartjs-2';
 import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend, LineElement, PointElement } from 'chart.js';
@@ -347,28 +347,28 @@ export default function AdminDashBoard({ orders = [], setOrders, totalReturns = 
                                             }
                                         });
                                         const itemsWithCount = recipesData
-                                            .map(recipe => ({
-                                                ...recipe,
-                                                orderCount: orderCountMap[recipe.title] || 0
+                                            .map(dish => ({
+                                                ...dish,
+                                                orderCount: orderCountMap[dish.title] || 0
                                             }))
                                             .sort((a, b) => b.orderCount - a.orderCount)
                                             .slice(0, 3);
 
-                                        return itemsWithCount.map(recipe => (
-                                            <div className="col-md-4 mb-3" key={recipe.id}>
+                                        return itemsWithCount.map(dish => (
+                                            <div className="col-md-4 mb-3" key={dish.id}>
                                                 <div className="card rounded-3 h-100 shadow-sm">
                                                     <img
-                                                        src={recipe.image}
+                                                        src={dish.image}
                                                         className="card-img-top"
-                                                        alt={recipe.title}
+                                                        alt={dish.title}
                                                         style={{ height: 160, objectFit: 'cover', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
                                                     />
                                                     <div className="card-body d-flex flex-column">
-                                                        <h6 className="card-title fw-bold mb-2" style={{ color: '#36b0c2' }}>{recipe.title}</h6>
+                                                        <h6 className="card-title fw-bold mb-2" style={{ color: '#36b0c2' }}>{dish.title}</h6>
                                                         <div className="mt-auto">
                                                             <span className="badge bg-primary text-light">
                                                                 <i className="bi bi-bag-fill me-1"></i>
-                                                                {recipe.orderCount} Orders
+                                                                {dish.orderCount} Orders
                                                             </span>
                                                         </div>
                                                     </div>

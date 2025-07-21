@@ -13,7 +13,7 @@ import Signup from './assets/pages/SignUp.jsx';
 import AdminDashboard from './assets/pages/AdminDashboard.jsx';
 import Orders from './assets/pages/Orders.jsx';
 import Cart from './assets/pages/Cart.jsx';
-import recipesData from './assets/data/Recipes.json';
+import recipesData from './assets/data/Dishes.json';
 import ProtectedRoute from './assets/components/ProtectedRoute.jsx';
 import AdminDishManagement from './assets/pages/AdminDishManagement.jsx';
 import AdminAddNewDish from './assets/pages/AdminAddNewDish.jsx';
@@ -34,14 +34,14 @@ function App() {
     localStorage.setItem('nutriplanner-favourites', JSON.stringify(favourites));
   }, [favourites]);
 
-  const addToFavourites = (recipe) => {
+  const addToFavourites = (dish) => {
     setFavourites(prev =>
-      prev.some(r => r.title === recipe.title) ? prev : [...prev, recipe]
+      prev.some(r => r.title === dish.title) ? prev : [...prev, dish]
     );
   };
 
-  const removeFromFavourites = (recipe) => {
-    setFavourites(prev => prev.filter(r => r.title !== recipe.title));
+  const removeFromFavourites = (dish) => {
+    setFavourites(prev => prev.filter(r => r.title !== dish.title));
   };
 
   const [orders, setOrders] = useState(() => {
@@ -93,19 +93,19 @@ function App() {
     localStorage.setItem('nutriplanner-cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (recipe) => {
+  const addToCart = (dish) => {
     setCartItems(prev => {
-      const existingItem = prev.find(item => item.title === recipe.title);
+      const existingItem = prev.find(item => item.title === dish.title);
 
       if (existingItem) {
         return prev.map(item =>
-          item.title === recipe.title
-            ? { ...item, quantity: item.quantity + (recipe.quantity || 1) }
+          item.title === dish.title
+            ? { ...item, quantity: item.quantity + (dish.quantity || 1) }
             : item
         );
       }
 
-      return [...prev, { ...recipe, quantity: recipe.quantity || 1 }];
+      return [...prev, { ...dish, quantity: dish.quantity || 1 }];
     });
   };
 
@@ -184,7 +184,7 @@ function App() {
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Home favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
-          <Route path="/recipe/:title" element={<RecipeDetailComponent favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
+          <Route path="/dish/:title" element={<RecipeDetailComponent favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
           <Route path="/contact" element={<Contact favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />
           <Route path="/about" element={<About />} />
           <Route path="/categories" element={<Categories favourites={favourites} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} addToOrders={addOrder} cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} />} />

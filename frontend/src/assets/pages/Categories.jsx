@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard.jsx';
-import recipesData from '../data/Recipes.json';
+import recipesData from '../data/Dishes.json';
 import '../css/Categories.css';
 
 export default function Categories({ favourites, addToFavourites, removeFromFavourites, addToOrders, cartItems, addToCart, removeFromCart }) {
@@ -46,26 +46,26 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
         const lowercasedSearchTerm = searchTerm.toLowerCase();
         const lowercasedIngredientSearch = ingredientSearch.toLowerCase();
 
-        const newFilteredRecipes = recipesData.filter(recipe => {
+        const newFilteredRecipes = recipesData.filter(dish => {
             const matchesSearchTerm = lowercasedSearchTerm === '' ||
-                recipe.title.toLowerCase().includes(lowercasedSearchTerm);
+                dish.title.toLowerCase().includes(lowercasedSearchTerm);
 
             const matchesIngredient = lowercasedIngredientSearch === '' ||
-                (recipe.ingredients && recipe.ingredients.some(ingredient =>
+                (dish.ingredients && dish.ingredients.some(ingredient =>
                     ingredient.toLowerCase().includes(lowercasedIngredientSearch)
                 ));
 
             const matchesDiet = selectedDiet === 'all' ||
-                (Array.isArray(recipe.diet) && recipe.diet.some(d => d.toLowerCase() === selectedDiet.toLowerCase()));
+                (Array.isArray(dish.diet) && dish.diet.some(d => d.toLowerCase() === selectedDiet.toLowerCase()));
 
-            const matchesCalories = (minCalories === '' || recipe.calories >= parseInt(minCalories)) &&
-                (maxCalories === '' || recipe.calories <= parseInt(maxCalories));
+            const matchesCalories = (minCalories === '' || dish.calories >= parseInt(minCalories)) &&
+                (maxCalories === '' || dish.calories <= parseInt(maxCalories));
 
             const matchesCategory = selectedCategory === 'all' ||
-                recipe.category.toLowerCase() === selectedCategory.toLowerCase();
+                dish.category.toLowerCase() === selectedCategory.toLowerCase();
 
             const matchesAllergy = selectedAllergy === 'all' ||
-                (Array.isArray(recipe.diet) && recipe.diet.some(d => d.toLowerCase().includes(selectedAllergy.toLowerCase())));
+                (Array.isArray(dish.diet) && dish.diet.some(d => d.toLowerCase().includes(selectedAllergy.toLowerCase())));
 
             return matchesSearchTerm && matchesIngredient && matchesDiet && matchesCalories && matchesCategory && matchesAllergy;
         });
@@ -82,10 +82,10 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
     const handleAllergyChange = (e) => setSelectedAllergy(e.target.value);
 
     const getRecipesByCategory = (category) => {
-        return filteredRecipes.filter(recipe => recipe.category === category);
+        return filteredRecipes.filter(dish => dish.category === category);
     };
 
-    const uniqueDiets = [...new Set(recipesData.flatMap(recipe => recipe.diet || []).filter(Boolean))];
+    const uniqueDiets = [...new Set(recipesData.flatMap(dish => dish.diet || []).filter(Boolean))];
 
     const toggleShowMoreFilters = () => {
         setShowMoreFilters(prev => !prev);
@@ -94,7 +94,7 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
     return (
         <div className="categories-page">
             <section className="container mb-5 mt-5 p-4 bg-light rounded-3 shadow-sm filter-section">
-                <h3 className="mb-4">Search and Filter Recipes</h3>
+                <h3 className="mb-4">Search and Filter Dishes</h3>
 
                 <div className="row g-4 align-items-end mb-4">
                     <div className="col-md-4">
@@ -218,10 +218,10 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
                                     <section className="container mb-5" key={category}>
                                         <h3 className="mb-4" id={`${category}-title`}>{displayCategory}</h3>
                                         <div className="row g-4">
-                                            {recipesForCategory.map((recipe, index) => (
+                                            {recipesForCategory.map((dish, index) => (
                                                 <div className="col-md-3" key={index}>
                                                     <RecipeCard
-                                                        {...recipe}
+                                                        {...dish}
                                                         favourites={favourites}
                                                         addToFavourites={addToFavourites}
                                                         removeFromFavourites={removeFromFavourites}
@@ -241,7 +241,7 @@ export default function Categories({ favourites, addToFavourites, removeFromFavo
                     </>
                 ) : (
                     <section className="container mb-5 text-center">
-                        <p className="lead">No recipes found matching your search criteria.</p>
+                        <p className="lead">No dishes found matching your search criteria.</p>
                     </section>
                 )}
             </div>

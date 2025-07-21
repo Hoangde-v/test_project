@@ -12,23 +12,23 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
     const [filteredFavourites, setFilteredFavourites] = useState(favourites);
     const navigate = useNavigate();
 
-    const uniqueDiets = [...new Set(favourites.flatMap(recipe => recipe.diet || []).filter(Boolean))];
+    const uniqueDiets = [...new Set(favourites.flatMap(dish => dish.diet || []).filter(Boolean))];
 
     useEffect(() => {
         let currentFiltered = favourites;
 
         if (searchTerm) {
             const lowerCaseSearchTerm = searchTerm.toLowerCase();
-            currentFiltered = currentFiltered.filter(recipe =>
-                recipe.title && recipe.title.toLowerCase().includes(lowerCaseSearchTerm)
+            currentFiltered = currentFiltered.filter(dish =>
+                dish.title && dish.title.toLowerCase().includes(lowerCaseSearchTerm)
             );
         }
 
         if (ingredientSearch) {
             const lowerCaseIngredientSearch = ingredientSearch.toLowerCase().split(',').map(item => item.trim());
-            currentFiltered = currentFiltered.filter(recipe =>
-                recipe.ingredients && lowerCaseIngredientSearch.every(searchIng =>
-                    recipe.ingredients.some(recipeIng =>
+            currentFiltered = currentFiltered.filter(dish =>
+                dish.ingredients && lowerCaseIngredientSearch.every(searchIng =>
+                    dish.ingredients.some(recipeIng =>
                         recipeIng.toLowerCase().includes(searchIng)
                     )
                 )
@@ -36,8 +36,8 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
         }
 
         if (selectedDiet !== 'all') {
-            currentFiltered = currentFiltered.filter(recipe =>
-                Array.isArray(recipe.diet) && recipe.diet.some(d => d.toLowerCase() === selectedDiet.toLowerCase())
+            currentFiltered = currentFiltered.filter(dish =>
+                Array.isArray(dish.diet) && dish.diet.some(d => d.toLowerCase() === selectedDiet.toLowerCase())
             );
         }
 
@@ -66,7 +66,7 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
     return (
         <div className="bg-light py-5" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
             <div className="container">
-                <h2 className='fs-2 fw-bold mb-5'>Your Favorite Recipes</h2>
+                <h2 className='fs-2 fw-bold mb-5'>Your Favorite Dishes</h2>
 
                 <section className="mb-5 p-4 bg-white rounded-3 shadow-sm">
                     <h4 className="mb-4">Search and Filter</h4>
@@ -77,7 +77,7 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
                                 type="text"
                                 className="form-control rounded-pill px-4 py-2"
                                 id="keywordSearch"
-                                placeholder="Search by recipe name..."
+                                placeholder="Search by dish name..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
                             />
@@ -104,7 +104,7 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
 
                 {filteredFavourites.length === 0 ? (
                     <div className="text-center p-5 bg-white rounded-3 shadow-sm">
-                        <p className="lead text-muted">No favorite recipes yet.</p>
+                        <p className="lead text-muted">No favorite dishes yet.</p>
                         <p className="text-muted">Find and add your favorite dishes! <Link
                             to='/categories'
                             style={{
@@ -118,12 +118,12 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
                     </div>
                 ) : (
                     <div className="row g-4">
-                        {filteredFavourites.map((recipe, index) => (
+                        {filteredFavourites.map((dish, index) => (
                             <div className="col-12" key={index}>
                                 <div className="d-flex flex-column flex-md-row p-4 align-items-center bg-white rounded-3 shadow-sm hover-scale-effect">
                                     <img
-                                        src={recipe.image}
-                                        alt={recipe.title}
+                                        src={dish.image}
+                                        alt={dish.title}
                                         className="rounded-3 me-md-4 mb-3 mb-md-0"
                                         style={{
                                             width: '150px',
@@ -133,10 +133,10 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
                                         }}
                                     />
                                     <div className="flex-grow-1 text-md-start">
-                                        <h5 className="fw-bold mb-2 fs-4">{recipe.title}</h5>
-                                        <p className="mb-2 text-muted"><img src={Fire} className="fire-icon" /> {recipe.calories} calories</p>
+                                        <h5 className="fw-bold mb-2 fs-4">{dish.title}</h5>
+                                        <p className="mb-2 text-muted"><img src={Fire} className="fire-icon" /> {dish.calories} calories</p>
                                         <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
-                                            {Array.isArray(recipe.diet) && recipe.diet.map((dietItem, dietIdx) => (
+                                            {Array.isArray(dish.diet) && dish.diet.map((dietItem, dietIdx) => (
                                                 <span
                                                     key={dietIdx}
                                                     className="badge rounded-pill px-3 py-1"
@@ -150,15 +150,15 @@ export default function FavouritePage({ favourites, removeFromFavourites }) {
                                     <div className="d-flex flex-column flex-md-row gap-2 mt-3 mt-md-0">
                                         <button
                                             className="btn btn-danger rounded-pill px-4 py-2"
-                                            onClick={() => removeFromFavourites(recipe)}
+                                            onClick={() => removeFromFavourites(dish)}
                                         >
                                             <i className="bi bi-trash me-2"></i> Remove
                                         </button>
                                         <button
                                             className="btn btn-primary rounded-pill px-4 py-2"
-                                            onClick={() => navigate(`/recipe/${encodeURIComponent(recipe.title)}`)}
+                                            onClick={() => navigate(`/dish/${encodeURIComponent(dish.title)}`)}
                                         >
-                                            <i className="bi bi-eye me-2"></i> View Recipe
+                                            <i className="bi bi-eye me-2"></i> View Dish
                                         </button>
                                     </div>
                                 </div>

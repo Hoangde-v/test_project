@@ -19,7 +19,7 @@
             "salt",
             "pepper"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A quick and healthy breakfast option with creamy avocado and a perfectly cooked egg.",
         "time": "10 Minutes",
         "authorImage": "/authorImage.svg",
@@ -46,7 +46,7 @@
             "soy sauce",
             "garlic"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A delicious and easy-to-make pan-seared chicken with fluffy rice and steamed broccoli.",
         "time": "25 Minutes",
         "authorImage": "/authorImage.svg",
@@ -74,7 +74,7 @@
             "cherry tomatoes",
             "lemon vinaigrette"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A light and refreshing salmon salad, perfect for a healthy dinner.",
         "time": "20 Minutes",
         "authorImage": "/authorImage.svg",
@@ -156,7 +156,7 @@
             "granola",
             "honey"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A layered Greek yogurt parfait with fresh berries and crunchy granola.",
         "time": "8 Minutes",
         "authorImage": "/authorImage.svg",
@@ -238,7 +238,7 @@
             "chia seeds",
             "maple syrup"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "Delicious and easy-to-make almond energy balls, perfect for a quick snack.",
         "time": "10 Minutes",
         "authorImage": "/authorImage.svg",
@@ -264,7 +264,7 @@
             "milk",
             "ice"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A refreshing blueberry protein shake, ideal for post-workout or a healthy breakfast.",
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",
@@ -290,7 +290,7 @@
             "mushrooms",
             "cheese"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A light and fluffy egg white omelette, packed with healthy vegetables.",
         "time": "12 Minutes",
         "authorImage": "/authorImage.svg",
@@ -318,7 +318,7 @@
             "bell peppers",
             "olive oil"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A nutritious and colorful quinoa and veggie bowl, perfect for a light lunch.",
         "time": "30 Minutes",
         "authorImage": "/authorImage.svg",
@@ -346,7 +346,7 @@
             "garlic",
             "dill"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A simple yet elegant grilled salmon dish with tender asparagus.",
         "time": "25 Minutes",
         "authorImage": "/authorImage.svg",
@@ -373,7 +373,7 @@
             "seeds",
             "chocolate chips"
         ],
-        "tagBadge": "Hot Recipe",
+        "tagBadge": "Hot Dish",
         "description": "A versatile and energy-boosting trail mix, perfect for on-the-go snacking.",
         "time": "5 Minutes",
         "authorImage": "/authorImage.svg",

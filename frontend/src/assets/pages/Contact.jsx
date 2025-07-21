@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chef from '../images/Contact/Chef.svg';
 import SaladBg from '../images/Contact/SaladBg.png';
-import recipesData from '../data/Recipes.json';
+import recipesData from '../data/Dishes.json';
 import RecipeCard from '../components/RecipeCard.jsx';
 
 export default function ContactPage({ favourites, addToFavourites, removeFromFavourites, addToOrders, cartItems, addToCart, removeFromCart }) {
@@ -239,20 +239,20 @@ export default function ContactPage({ favourites, addToFavourites, removeFromFav
 
             <section className='container mt-7 mb-5'>
                 <div className='d-flex justify-content-center mb-3'>
-                    <h3 className="fw-bold mt-5">Check out the delicious recipe</h3>
+                    <h3 className="fw-bold mt-5">Check out the delicious dish</h3>
                 </div>
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                     {similarRecipes.length > 0 ? (
-                        similarRecipes.map((recipe, index) => (
+                        similarRecipes.map((dish, index) => (
                             <div className="col" key={index}>
                                 <RecipeCard
-                                    image={recipe.image}
-                                    title={recipe.title}
-                                    description={recipe.description}
-                                    time={recipe.time}
-                                    diet={recipe.diet}
-                                    calories={recipe.calories}
-                                    price={recipe.price}
+                                    image={dish.image}
+                                    title={dish.title}
+                                    description={dish.description}
+                                    time={dish.time}
+                                    diet={dish.diet}
+                                    calories={dish.calories}
+                                    price={dish.price}
                                     favourites={favourites}
                                     addToFavourites={addToFavourites}
                                     removeFromFavourites={removeFromFavourites}
@@ -265,7 +265,7 @@ export default function ContactPage({ favourites, addToFavourites, removeFromFav
                         ))
                     ) : (
                         <div className="col-12 text-center">
-                            <p className="text-muted">No recipes to display.</p>
+                            <p className="text-muted">No dishes to display.</p>
                         </div>
                     )}
                 </div>

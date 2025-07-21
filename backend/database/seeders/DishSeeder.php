@@ -10,21 +10,21 @@ use App\Models\DietType;
 use App\Models\MealType;
 use App\Models\Allergen;
 
-class RecipeSeeder extends Seeder
+class DishSeeder extends Seeder
 {
     public function run()
     {
-        $json = File::get(database_path('data/RecipesData.json'));
-        $recipes = json_decode($json, true);
+        $json = File::get(database_path('data/DishesData.json'));
+        $dishes = json_decode($json, true);
 
-        foreach ($recipes as $recipe) {
+        foreach ($dishes as $dish) {
             $mealType = MealType::firstOrCreate([
-                'mealType' => ucfirst($recipe['category'])
+                'mealType' => ucfirst($dish['category'])
             ]);
 
             $dietTypeName = 'General';
-            if (isset($recipe['diet']) && is_array($recipe['diet']) && count($recipe['diet']) > 0) {
-                $dietTypeName = trim($recipe['diet'][0]);
+            if (isset($dish['diet']) && is_array($dish['diet']) && count($dish['diet']) > 0) {
+                $dietTypeName = trim($dish['diet'][0]);
             }
 
             $dietType = DietType::firstOrCreate([
@@ -35,23 +35,23 @@ class RecipeSeeder extends Seeder
                 'allergen' => 'None'
             ]);
 
-            $prepTime = (int) preg_replace('/\D/', '', $recipe['time']);
+            $prepTime = (int) preg_replace('/\D/', '', $dish['time']);
 
             $meal = Meal::create([
-                'name' => $recipe['title'],
-                'description' => $recipe['description'],
-                'calories' => $recipe['calories'],
-                'protein' => $recipe['protein'],
-                'carbs' => $recipe['carb'],
-                'fat' => $recipe['fats'],
-                'price' => $recipe['price'],
+                'name' => $dish['title'],
+                'description' => $dish['description'],
+                'calories' => $dish['calories'],
+                'protein' => $dish['protein'],
+                'carbs' => $dish['carb'],
+                'fat' => $dish['fats'],
+                'price' => $dish['price'],
                 'prep_time' => $prepTime,
                 'dietType_ID' => $dietType->id,
                 'mealType_ID' => $mealType->id,
                 'allergen_ID' => $allergen->id
             ]);
 
-            foreach ($recipe['ingredients'] as $ingredientData) {
+            foreach ($dish['ingredients'] as $ingredientData) {
                 $ingredient = Ingredient::firstOrCreate(
                     ['name' => strtolower($ingredientData['name'])],
                     [

@@ -4,7 +4,7 @@ import Swiper from 'swiper';
 import 'swiper/css/bundle';
 import { Autoplay, Pagination } from 'swiper/modules';
 import '../css/Home.css';
-import RecipesData from '../data/Recipes.json';
+import RecipesData from '../data/Dishes.json';
 import Slide from '../components/Slide.jsx';
 import RecipeCard from '../components/RecipeCard.jsx'
 import Post from '../components/Post.jsx';
@@ -128,7 +128,7 @@ export default function Home({ favourites, addToFavourites, removeFromFavourites
                 <div className="swiper mySwiper">
                     <div className="swiper-wrapper">
                         {heroSlidesData
-                            .filter(slide => slide.tagBadge === "Hot Recipe")
+                            .filter(slide => slide.tagBadge === "Hot Dish")
                             .map((slide, index) => (
                                 <Slide key={index} {...slide} />
                             ))}
@@ -170,16 +170,16 @@ export default function Home({ favourites, addToFavourites, removeFromFavourites
 
             <section className="container mb-custom-spacing">
                 <section className="container text-center mb-4">
-                    <h2 className="fw-bold mb-3">Simple and tasty recipes</h2>
+                    <h2 className="fw-bold mb-3">Simple and tasty dishes</h2>
                     <p className="text-muted mb-5">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquat enim ad minim
                     </p>
                 </section>
                 <div className="row g-4">
                     {heroSlidesData
-                        .filter(recipe => recipe.tagBadge === "Hot Recipe")
+                        .filter(dish => dish.tagBadge === "Hot Dish")
                         .slice(0, 9)
-                        .map((recipe, index) => (
+                        .map((dish, index) => (
                             <div className="col-md-4" key={index}>
                                 {index === 5 ? (
                                     <div className="card h-100 border-0 shadow-sm">
@@ -192,7 +192,7 @@ export default function Home({ favourites, addToFavourites, removeFromFavourites
                                     </div>
                                 ) : (
                                     <RecipeCard
-                                        {...recipe}
+                                        {...dish}
                                         favourites={favourites}
                                         addToFavourites={addToFavourites}
                                         removeFromFavourites={removeFromFavourites}

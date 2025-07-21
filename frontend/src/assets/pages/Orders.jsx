@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import recipesData from '../data/Recipes.json';
+import recipesData from '../data/Dishes.json';
 import placeholderImage from '../images/RecipeDetail/RecipeNotFound.svg';
 import '../css/Orders.css';
 import { Link } from 'react-router-dom';
@@ -83,13 +83,13 @@ const Orders = ({ currentOrders, removeOrder, setTotalReturns }) => {
     }, [removeOrder]);
 
     const renderOrderItem = useCallback((order) => {
-        const recipe = recipesData.find(r => r.title === order.name);
-        const displayImage = order.image || (recipe ? recipe.image : placeholderImage);
+        const dish = recipesData.find(r => r.title === order.name);
+        const displayImage = order.image || (dish ? dish.image : placeholderImage);
         const displayDiet = Array.isArray(order.diet) && order.diet.length > 0
             ? order.diet
-            : (recipe ? recipe.diet : []);
+            : (dish ? dish.diet : []);
         const statusInfo = getStatusInfo(order.status);
-        const price = parseFloat(recipe?.price || 0);
+        const price = parseFloat(dish?.price || 0);
         const quantity = order.quantity || 1;
         const totalPrice = price * quantity;
 
@@ -140,10 +140,10 @@ const Orders = ({ currentOrders, removeOrder, setTotalReturns }) => {
                         <i className="bi bi-x-circle"></i> Remove Item
                     </button>
                     <Link
-                        to={`/recipe/${encodeURIComponent(order.name)}`}
+                        to={`/dish/${encodeURIComponent(order.name)}`}
                         className="btn btn-primary rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-1"
                     >
-                        <i className="bi bi-eye"></i> View Recipe
+                        <i className="bi bi-eye"></i> View Dish
                     </Link>
                 </div>
             </div>
@@ -152,8 +152,8 @@ const Orders = ({ currentOrders, removeOrder, setTotalReturns }) => {
 
     const calculateGroupTotalPrice = useCallback((items) => {
         return items.reduce((sum, item) => {
-            const recipe = recipesData.find(r => r.title === item.name);
-            const price = parseFloat(recipe?.price || 0);
+            const dish = recipesData.find(r => r.title === item.name);
+            const price = parseFloat(dish?.price || 0);
             const quantity = item.quantity || 1;
             return sum + price * quantity;
         }, 0).toFixed(2);

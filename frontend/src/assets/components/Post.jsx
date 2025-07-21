@@ -4,7 +4,7 @@ import Avatar1 from '../images/Post/Avatar1.svg';
 
 const Post = ({ likes, date, index }) => {
     const imageNumber = (index % 4) + 1;
-    const image = `/Recipe${imageNumber}.svg`;
+    const image = `/Dish${imageNumber}.svg`;
 
     return (
         <div className="post-card">
@@ -22,7 +22,7 @@ const Post = ({ likes, date, index }) => {
             </div>
 
             <div className="post-image-container">
-                <img src={image} alt={`Recipe ${imageNumber}`} className="post-image" />
+                <img src={image} alt={`Dish ${imageNumber}`} className="post-image" />
                 <span className="image-counter">1/3</span>
             </div>
 

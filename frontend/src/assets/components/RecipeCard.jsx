@@ -20,7 +20,7 @@ const RecipeCard = ({
     addToCart,
     removeFromCart
 }) => {
-    const recipeUrl = `/recipe/${encodeURIComponent(title)}`;
+    const recipeUrl = `/dish/${encodeURIComponent(title)}`;
     const isFavorite =
         favourites &&
         Array.isArray(favourites) &&
@@ -99,7 +99,7 @@ const RecipeCard = ({
         <>
             <Link
                 to={recipeUrl}
-                className="card h-100 border-0 shadow-sm recipe-card text-decoration-none text-dark py-3"
+                className="card h-100 border-0 shadow-sm dish-card text-decoration-none text-dark py-3"
             >
                 <div className="position-relative">
                     <img src={image} className="card-img-top" alt={title} />
@@ -111,7 +111,7 @@ const RecipeCard = ({
                     </button>
                 </div>
                 <div className="card-body">
-                    <h5 className="fw-semibold text-decoration-none text-black recipe-card-title">
+                    <h5 className="fw-semibold text-decoration-none text-black dish-card-title">
                         {title}
                     </h5>
 
@@ -159,7 +159,7 @@ const RecipeCard = ({
                     )}
 
                     {price && (
-                        <span className="fw-semibold text-danger recipe-card-title">
+                        <span className="fw-semibold text-danger dish-card-title">
                             ${parseFloat(price).toFixed(2)}
                         </span>
                     )}

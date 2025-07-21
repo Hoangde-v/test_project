@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import recipesData from '../data/Recipes.json';
+import recipesData from '../data/Dishes.json';
 import RecipeCard from '../components/RecipeCard.jsx';
 
 import timer from '../images/RecipeDetail/Timer.png';
@@ -25,13 +25,13 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
     const decodedRecipeTitle = decodeURIComponent(recipeTitle).toLowerCase();
 
     const foundRecipe = recipesData.find(
-      (recipe) => recipe.title.toLowerCase() === decodedRecipeTitle
+      (dish) => dish.title.toLowerCase() === decodedRecipeTitle
     );
     setCurrentRecipe(foundRecipe);
 
     if (foundRecipe) {
       const filteredSimilar = recipesData.filter(
-        (recipe) => recipe.category === foundRecipe.category && recipe.title !== foundRecipe.title
+        (dish) => dish.category === foundRecipe.category && dish.title !== foundRecipe.title
       ).slice(0, 4);
       setSimilarRecipes(filteredSimilar);
     } else {
@@ -41,7 +41,7 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
   }, [recipeTitle, recipesData]);
 
   const recipeToDisplay = currentRecipe || {
-    title: "Recipe Not Found",
+    title: "Dish Not Found",
     calories: "N/A",
     diet: "N/A",
     image: RecipeNotFound,
@@ -93,7 +93,7 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
     e.preventDefault();
     e.stopPropagation();
 
-    if (addToOrders && recipeToDisplay.title !== "Recipe Not Found") {
+    if (addToOrders && recipeToDisplay.title !== "Dish Not Found") {
       const orderDetails = {
         name: recipeToDisplay.title,
         image: recipeToDisplay.image,
@@ -110,7 +110,7 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
     e.preventDefault();
     e.stopPropagation();
 
-    if (!recipeToDisplay || recipeToDisplay.title === "Recipe Not Found") return;
+    if (!recipeToDisplay || recipeToDisplay.title === "Dish Not Found") return;
 
     const existingInCart = cartItems.some(item => item.title === recipeToDisplay.title);
 
@@ -337,28 +337,28 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
             <h5 className="fw-bold">Other Dishes</h5>
 
             {similarRecipes.length > 0 ? (
-              similarRecipes.map((recipe, index) => (
+              similarRecipes.map((dish, index) => (
                 <div className="d-flex mb-3" key={index}>
-                  <Link to={`/recipe/${encodeURIComponent(recipe.title)}`} className="me-3">
+                  <Link to={`/dish/${encodeURIComponent(dish.title)}`} className="me-3">
                     <img
-                      src={recipe.image}
+                      src={dish.image}
                       className="rounded-3"
                       width="120"
                       height="80"
-                      alt={recipe.title}
+                      alt={dish.title}
                       style={{ objectFit: 'cover' }}
                     />
                   </Link>
                   <div>
-                    <Link to={`/recipe/${encodeURIComponent(recipe.title)}`} className="mb-1 fw-semibold text-decoration-none text-black">
-                      {recipe.title}
+                    <Link to={`/dish/${encodeURIComponent(dish.title)}`} className="mb-1 fw-semibold text-decoration-none text-black">
+                      {dish.title}
                     </Link>
-                    <p className="text-muted">{Array.isArray(recipe.diet) ? recipe.diet.join(', ') : recipe.diet}</p>
+                    <p className="text-muted">{Array.isArray(dish.diet) ? dish.diet.join(', ') : dish.diet}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-muted">No similar recipes found.</p>
+              <p className="text-muted">No similar dishes found.</p>
             )}
 
             <div className="text-center bg-success text-white p-4 rounded-4 mt-3">
@@ -402,16 +402,16 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
         </div>
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
           {similarRecipes.length > 0 ? (
-            similarRecipes.map((recipe, index) => (
+            similarRecipes.map((dish, index) => (
               <div className="col" key={index}>
                 <RecipeCard
-                  image={recipe.image}
-                  title={recipe.title}
-                  description={recipe.description}
-                  time={recipe.time}
-                  diet={recipe.diet}
-                  calories={recipe.calories}
-                  price={recipe.price}
+                  image={dish.image}
+                  title={dish.title}
+                  description={dish.description}
+                  time={dish.time}
+                  diet={dish.diet}
+                  calories={dish.calories}
+                  price={dish.price}
                   favourites={favourites}
                   addToFavourites={addToFavourites}
                   removeFromFavourites={removeFromFavourites}
@@ -424,7 +424,7 @@ const RecipeDetailComponent = ({ favourites, addToFavourites, removeFromFavourit
             ))
           ) : (
             <div className="col-12 text-center">
-              <p className="text-muted">No recipes to display.</p>
+              <p className="text-muted">No dishes to display.</p>
             </div>
           )}
         </div>

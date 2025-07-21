@@ -2,7 +2,7 @@ import Fire from '../images/Home/Fire.png'
 import { Link } from 'react-router-dom';
 
 const Slide = ({ tagBadge, title, description, time, category, authorImage, authorName, authorDate, image }) => {
-    const recipeDetailUrl = `/recipe/${encodeURIComponent(title)}`;
+    const recipeDetailUrl = `/dish/${encodeURIComponent(title)}`;
 
     return (
         <div className="swiper-slide">
@@ -25,7 +25,7 @@ const Slide = ({ tagBadge, title, description, time, category, authorImage, auth
                                 <small className="author-date text-muted">{authorDate}</small>
                             </div>
                         </div>
-                        <Link to={recipeDetailUrl} className="btn-dark-rounded">View Recipe</Link>
+                        <Link to={recipeDetailUrl} className="btn-dark-rounded">View Dish</Link>
                     </div>
                 </div>
                 <div className="col-md-6 text-center h-100 p-0">

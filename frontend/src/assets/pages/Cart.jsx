@@ -114,7 +114,7 @@ const Cart = ({ cartItems, removeFromCart, onPlaceOrder }) => {
                                 <input
                                     type="text"
                                     className="form-control rounded-pill px-4 py-2"
-                                    placeholder="Search by recipe name..."
+                                    placeholder="Search by dish name..."
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}
                                 />
@@ -218,9 +218,9 @@ const Cart = ({ cartItems, removeFromCart, onPlaceOrder }) => {
 
                                                 <button
                                                     className="btn btn-primary rounded-pill px-4 py-2"
-                                                    onClick={() => navigate(`/recipe/${encodeURIComponent(item.title)}`)}
+                                                    onClick={() => navigate(`/dish/${encodeURIComponent(item.title)}`)}
                                                 >
-                                                    <i className="bi bi-eye me-2"></i> View Recipe
+                                                    <i className="bi bi-eye me-2"></i> View Dish
                                                 </button>
 
                                                 <button

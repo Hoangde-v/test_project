@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import AdminDishCard from '../components/AdminDishCard.jsx';
-import recipesData from '../data/Recipes.json';
+import recipesData from '../data/Dishes.json';
 import '../css/Categories.css';
 
 const AdminDishManagement = ({
@@ -54,26 +54,26 @@ const AdminDishManagement = ({
         const lowerSearch = searchTerm.toLowerCase();
         const lowerIngredient = ingredientSearch.toLowerCase();
 
-        const filtered = recipesData.filter(recipe => {
-            const matchSearch = lowerSearch === '' || recipe.title.toLowerCase().includes(lowerSearch);
+        const filtered = recipesData.filter(dish => {
+            const matchSearch = lowerSearch === '' || dish.title.toLowerCase().includes(lowerSearch);
             const matchIngredient = lowerIngredient === '' ||
-                (recipe.ingredients && recipe.ingredients.some(ing => ing.toLowerCase().includes(lowerIngredient)));
+                (dish.ingredients && dish.ingredients.some(ing => ing.toLowerCase().includes(lowerIngredient)));
             const matchDiet = selectedDiet === 'all' ||
-                (Array.isArray(recipe.diet) && recipe.diet.some(d => d.toLowerCase() === selectedDiet.toLowerCase()));
+                (Array.isArray(dish.diet) && dish.diet.some(d => d.toLowerCase() === selectedDiet.toLowerCase()));
             const matchCalories =
-                (minCalories === '' || recipe.calories >= parseInt(minCalories)) &&
-                (maxCalories === '' || recipe.calories <= parseInt(maxCalories));
+                (minCalories === '' || dish.calories >= parseInt(minCalories)) &&
+                (maxCalories === '' || dish.calories <= parseInt(maxCalories));
             const matchCategory = selectedCategory === 'all' ||
-                recipe.category.toLowerCase() === selectedCategory.toLowerCase();
+                dish.category.toLowerCase() === selectedCategory.toLowerCase();
             const matchAllergy = selectedAllergy === 'all' ||
-                (Array.isArray(recipe.diet) && recipe.diet.some(d => d.toLowerCase().includes(selectedAllergy.toLowerCase())));
+                (Array.isArray(dish.diet) && dish.diet.some(d => d.toLowerCase().includes(selectedAllergy.toLowerCase())));
             return matchSearch && matchIngredient && matchDiet && matchCalories && matchCategory && matchAllergy;
         });
 
         setFilteredRecipes(filtered);
     }, [searchTerm, ingredientSearch, selectedDiet, minCalories, maxCalories, selectedCategory, selectedAllergy]);
 
-    const uniqueDiets = [...new Set(recipesData.flatMap(recipe => recipe.diet || []).filter(Boolean))];
+    const uniqueDiets = [...new Set(recipesData.flatMap(dish => dish.diet || []).filter(Boolean))];
 
     const handleEdit = (id) => navigate(`/admin/dishes/edit/${id}`);
     const handleDeleteClick = (id) => {
@@ -97,7 +97,7 @@ const AdminDishManagement = ({
             </section>
 
             <section className="mb-5 mt-5 p-4 bg-light rounded-3 shadow-sm filter-section">
-                <h3 className="mb-4">Search and Filter Recipes</h3>
+                <h3 className="mb-4">Search and Filter Dishes</h3>
                 <div className="row g-4 align-items-end mb-4">
                     <div className="col-md-4">
                         <label htmlFor="keywordSearch" className="form-label">By Keyword</label>
@@ -203,18 +203,18 @@ const AdminDishManagement = ({
 
             {filteredRecipes.length > 0 ? (
                 allCategories.map(category => {
-                    const recipes = getRecipesByCategory(category);
-                    if (recipes.length === 0) return null;
+                    const dishes = getRecipesByCategory(category);
+                    if (dishes.length === 0) return null;
                     return (
                         <section className="mb-5" key={category}>
                             <h3 className="mb-4" id={`${category}-title`}>
                                 {categoryDisplayNames[category] || category}
                             </h3>
                             <div className="row g-4">
-                                {recipes.map((recipe, i) => (
+                                {dishes.map((dish, i) => (
                                     <div className="col-md-3" key={i}>
                                         <AdminDishCard
-                                            {...recipe}
+                                            {...dish}
                                             onEdit={handleEdit}
                                             onDelete={handleDeleteClick}
                                             favourites={favourites}
@@ -233,7 +233,7 @@ const AdminDishManagement = ({
                 })
             ) : (
                 <section className="mb-5 text-center">
-                    <p className="lead">No recipes found matching your search criteria.</p>
+                    <p className="lead">No dishes found matching your search criteria.</p>
                 </section>
             )}
 
