@@ -10,12 +10,13 @@ import Categories from './assets/pages/Categories.jsx';
 import FavouritePage from './assets/pages/Favourite.jsx';
 import Login from './assets/pages/Login.jsx';
 import Signup from './assets/pages/SignUp.jsx';
-import AdminDB from './assets/pages/AdminDB.jsx';
+import AdminDashboard from './assets/pages/AdminDashboard.jsx';
 import Orders from './assets/pages/Orders.jsx';
 import Cart from './assets/pages/Cart.jsx';
 import recipesData from './assets/data/Recipes.json';
-import ProductManager from './assets/pages/ProductManager';
 import ProtectedRoute from './assets/components/ProtectedRoute.jsx';
+import AdminDishManagement from './assets/pages/AdminDishManagement.jsx';
+import AdminAddNewDish from './assets/pages/AdminAddNewDish.jsx';
 
 function NotFound() {
   return <h1 className="text-center font-bold my-5">404 - Not Found</h1>;
@@ -135,7 +136,6 @@ function App() {
     });
   };
 
-
   const [totalReturns, setTotalReturns] = useState(() => {
     const saved = localStorage.getItem('nutriplanner-totalReturns');
     return saved ? Number(saved) : 0;
@@ -144,6 +144,38 @@ function App() {
   useEffect(() => {
     localStorage.setItem('nutriplanner-totalReturns', totalReturns);
   }, [totalReturns]);
+
+  const [dishes, setDishes] = useState(() => {
+    const savedDishes = localStorage.getItem('nutriplanner-admin-dishes');
+    return savedDishes ? JSON.parse(savedDishes) : recipesData.map((dish, index) => ({
+      id: index + 1,
+      title: dish.title,
+      image: dish.image,
+      diet: dish.diet,
+      price: dish.price,
+      description: dish.description,
+      ingredients: dish.ingredients,
+    }));
+  });
+
+  useEffect(() => {
+    localStorage.setItem('nutriplanner-admin-dishes', JSON.stringify(dishes));
+  }, [dishes]);
+
+  const handleSaveDish = (dishToSave) => {
+    setDishes(prevDishes => {
+      if (dishToSave.id) {
+        return prevDishes.map(d => d.id === dishToSave.id ? dishToSave : d);
+      } else {
+        const newId = prevDishes.length > 0 ? Math.max(...prevDishes.map(d => d.id)) + 1 : 1;
+        return [...prevDishes, { ...dishToSave, id: newId }];
+      }
+    });
+  };
+
+  const handleDeleteDish = (idToDelete) => {
+    setDishes(prevDishes => prevDishes.filter(dish => dish.id !== idToDelete));
+  };
 
 
   return (
@@ -159,17 +191,13 @@ function App() {
           <Route path="/favourite" element={<FavouritePage favourites={favourites} removeFromFavourites={removeFromFavourites} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><AdminDB orders={orders} setOrders={setOrders} totalReturns={totalReturns} setTotalReturns={setTotalReturns} /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard orders={orders} setOrders={setOrders} totalReturns={totalReturns} setTotalReturns={setTotalReturns} /></ProtectedRoute>} />
           <Route path="/orders" element={<Orders currentOrders={orders} removeOrder={removeOrder} />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart} onPlaceOrder={handlePlaceOrderFromCart} />} />
-          <Route path="/product-manager" element={<ProductManager />} />
-
+          <Route path="/admin/dishes" element={<ProtectedRoute allowedRoles={['admin']}><AdminDishManagement dishes={dishes} handleDelete={handleDeleteDish} /></ProtectedRoute>} />
+          <Route path="/admin/dishes/add" element={<ProtectedRoute allowedRoles={['admin']}><AdminAddNewDish dishes={dishes} onSaveDish={handleSaveDish} /></ProtectedRoute>} />
+          <Route path="/admin/dishes/edit/:id" element={<ProtectedRoute allowedRoles={['admin']}><AdminAddNewDish dishes={dishes} onSaveDish={handleSaveDish} /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />
-
-          {/* <Route path="/user-dashboard" element={<ProtectedRoute allowedRoles={['user', 'admin']}><UserDashboard /></ProtectedRoute>} /> */}
-          {/* Bao giờ có admin với user dash board thì sẵn mở */}
-
-
         </Routes>
       </main>
       <Footer />
